@@ -229,6 +229,7 @@
       <CompilerFlavor Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">msvc;msvc</CompilerFlavor>
       <Include Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">temp/moc/moc_predefs.h;temp/moc/moc_predefs.h</Include>
     </QtMoc>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="tbsfunc.h" />
     <QtMoc Include="threadtbs.h">
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;$(Platform);QT_WIDGETS_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_CORE_LIB</Define>
@@ -332,6 +333,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="hdmioptiongui.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\myapp.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

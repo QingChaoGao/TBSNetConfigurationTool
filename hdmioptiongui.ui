@@ -296,7 +296,7 @@
           <item>
            <widget class="QRadioButton" name="rad_Hdmi">
             <property name="text">
-             <string>HDMI</string>
+             <string>HDMI Capture Card Setting</string>
             </property>
            </widget>
           </item>
@@ -316,7 +316,7 @@
           <item>
            <widget class="QRadioButton" name="rad_Net">
             <property name="text">
-             <string>Network</string>
+             <string> Streaming&amp;&amp;Network Setting</string>
             </property>
            </widget>
           </item>
@@ -1372,7 +1372,7 @@
                  <string notr="true">background-color: rgb(0, 40, 0)</string>
                 </property>
                 <property name="text">
-                 <string>Restore</string>
+                 <string>Import </string>
                 </property>
                </widget>
               </item>
@@ -1388,7 +1388,7 @@
                  <string notr="true">background-color: rgb(0, 40, 0)</string>
                 </property>
                 <property name="text">
-                 <string>Configuration Backup</string>
+                 <string>Export</string>
                 </property>
                </widget>
               </item>

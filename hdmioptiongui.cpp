@@ -892,11 +892,11 @@ void Hdmioptiongui::radioClick_HN()
 		}
 	}
 
-	if (name == "HDMI") {
+	if (name == "HDMI Capture Card Setting") {
 		ui->sta_DevWdeget->setCurrentIndex(0);
 
 	}
-	else if (name == "Network") {
+	else if (name == " Streaming&&Network Setting") {
 		ui->sta_DevWdeget->setCurrentIndex(1);
 		ui->tabNetwork->setCurrentIndex(0);
 	}

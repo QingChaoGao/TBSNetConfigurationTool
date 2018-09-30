@@ -1023,8 +1023,8 @@ public:
         btnMenu_Close->setText(QString());
         btnMenu_Max->setText(QString());
         gbx_SelectPage->setTitle(QString());
-        rad_Hdmi->setText(QApplication::translate("Hdmioptiongui", "HDMI", nullptr));
-        rad_Net->setText(QApplication::translate("Hdmioptiongui", "Network", nullptr));
+        rad_Hdmi->setText(QApplication::translate("Hdmioptiongui", "HDMI Capture Card Setting", nullptr));
+        rad_Net->setText(QApplication::translate("Hdmioptiongui", " Streaming&&Network Setting", nullptr));
         label_21->setText(QApplication::translate("Hdmioptiongui", "MAC for HDMI:", nullptr));
         btn_Refresh->setText(QApplication::translate("Hdmioptiongui", "Refresh Devices", nullptr));
         QTreeWidgetItem *___qtreewidgetitem = tree_Dev->headerItem();
@@ -1097,8 +1097,8 @@ public:
         label_18->setText(QApplication::translate("Hdmioptiongui", "Local IP&&Server Port:", nullptr));
         che_DHCP->setText(QApplication::translate("Hdmioptiongui", " Enable DHCP", nullptr));
         tabNetwork->setTabText(tabNetwork->indexOf(TabIpSetting), QApplication::translate("Hdmioptiongui", "IP Setting    ", nullptr));
-        btn_Upload->setText(QApplication::translate("Hdmioptiongui", "Restore", nullptr));
-        btn_Download->setText(QApplication::translate("Hdmioptiongui", "Configuration Backup", nullptr));
+        btn_Upload->setText(QApplication::translate("Hdmioptiongui", "Import ", nullptr));
+        btn_Download->setText(QApplication::translate("Hdmioptiongui", "Export", nullptr));
         btn_Set->setText(QApplication::translate("Hdmioptiongui", "Apply", nullptr));
         label_14->setText(QApplication::translate("Hdmioptiongui", "Network device list:", nullptr));
     } // retranslateUi
