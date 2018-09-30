@@ -254,7 +254,7 @@ int threadTbs::setLocal_IP_Port_MAC()
 
 	et.HardRST();
 	local_ip_port_mac_flg = 2;
-	QMSLEEP(29980);
+	QMSLEEP(24980);
 
 	m->ok = 1;
 	m->type = 9;
@@ -330,14 +330,14 @@ int threadTbs::showUI_end()
 
 void threadTbs::udpMulticastClinet()
 {
-	int timevalue = 500;
+	int timevalue = 1000;
 	if (0 == reflashflg) {
-		timevalue = 500;
+		timevalue = 1000;
 	}
 	else {
-		timevalue = 500;
+		timevalue = 1000;
 	}
-	reflashflg ++;
+	reflashflg++;
 
 #ifdef Q_OS_WIN //windows
 	SOCKET  Mfd;
@@ -347,10 +347,10 @@ void threadTbs::udpMulticastClinet()
 
 #else           //linux
 	int Mfd;
-	struct timeval timeout = { timevalue,0 };
+	struct timeval timeout = { 1,0 };
 #endif
 	struct sockaddr_in addr;
-	char recvtmp[64] = { '\0' };
+	char recvtmp[128] = { '\0' };
 	char sendbuf[64] = { '\0' };
 	char recvbuf[64] = { '\0' };
 	u8 tmp[2] = { 0 };
@@ -378,6 +378,7 @@ void threadTbs::udpMulticastClinet()
 	sendbuf[9] = 0x4f;
 	sendbuf[10] = 0x44;
 	sendbuf[11] = 0x54;
+	//c0ffffff54425350524f4454
 	if (sendto(Mfd, sendbuf, strlen(sendbuf), 0, (struct sockaddr *) &addr, len) < 0)
 	{
 		qDebug() << " fail to sendto";
@@ -402,7 +403,13 @@ void threadTbs::udpMulticastClinet()
 			break;
 		}
 		else {
-			if (((u8)(0x63) != (u8)recvbuf[4]) || ((u8)(0x16) != (u8)recvbuf[5])) {
+			if ((((u8)(0x80) != (u8)recvbuf[4]) &&
+				((u8)(0x63) != (u8)recvbuf[4])) ||
+				(((u8)(0x30) != (u8)recvbuf[5]) &&
+				((u8)(0x16) != (u8)recvbuf[5])) ||
+					(((u8)(0x00) != (u8)(recvbuf[12])) ||
+				((u8)(0x22) != (u8)(recvbuf[13])) ||
+						((u8)(0xab) != (u8)(recvbuf[14])))) {
 				continue;
 			}
 			if (netseg != (u8)recvbuf[8]) {
@@ -410,9 +417,15 @@ void threadTbs::udpMulticastClinet()
 			}
 			tmp[0] = (u8)recvbuf[11];
 			tmp[1] = (u8)recvbuf[10];
-			sprintf(recvtmp, "TBS%02x%02x:%d.%d.%d.%d:%d", (u8)0x80, (u8)0x30, (u8)recvbuf[6], \
-				(u8)recvbuf[7], (u8)recvbuf[8], (u8)recvbuf[9], *(u16*)&tmp[0]);
-			emit sendIp(QString(recvtmp), i);
+			sprintf(recvtmp, "TBS%02x%02x:%d.%d.%d.%d:%d"
+				"/%02x:%02x:%02x:%02x:%02x:%02x",
+				(u8)0x80, (u8)0x30, (u8)recvbuf[6], \
+				(u8)recvbuf[7], (u8)recvbuf[8],
+				(u8)recvbuf[9], *(u16*)&tmp[0],
+				(u8)recvbuf[12], (u8)recvbuf[13],
+				(u8)recvbuf[14], (u8)recvbuf[15],
+				(u8)recvbuf[16], (u8)recvbuf[17]);
+			emit sendIp(QString(recvtmp));
 			i++;
 			QMSLEEP(1);
 		}

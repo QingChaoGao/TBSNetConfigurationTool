@@ -1020,13 +1020,13 @@ SOCKET tbsfunc::udpOpen(QString ipaddr, int ipport)
 {
 	SOCKET ufd;
 	WSAStartup(MAKEWORD(1, 1), &wsaData);
-	int timeout = 5000;
+	int timeout = 3000;
 #else
 
 int tbsfunc::udpOpen(QString ipaddr, int ipport)
 {
 	int ufd = 0;
-	struct timeval timeout = { 5,0 };
+	struct timeval timeout = { 3,0 };
 #endif
 	char sendbuff[64] = { 0 };
 	char recvbuff[64] = { 0 };

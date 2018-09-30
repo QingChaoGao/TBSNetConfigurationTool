@@ -216,25 +216,25 @@ int Hdmioptiongui::initStreamingForm()
 			tabWS->setItem(j, 1, new QTableWidgetItem(QString("%1").arg(sf[i].port)));
 			//tabWS->item(j, 1)->setTextAlignment(Qt::AlignCenter);
 			//Net Protocol
-			comBoxProtocol[j] = new QComboBox();
-			comBoxProtocol[j]->addItem(QObject::tr("UDP"));
-			comBoxProtocol[j]->addItem(QObject::tr("RTP"));
-			comBoxProtocol[j]->setCurrentIndex(sf[i].protocol);
-			comBoxProtocol[j]->setEnabled(true);
-			tabWS->setCellWidget(j, 2, comBoxProtocol[j]);
+			comBoxProtocol[i] = new QComboBox();
+			comBoxProtocol[i]->addItem(QObject::tr("UDP"));
+			comBoxProtocol[i]->addItem(QObject::tr("RTP"));
+			comBoxProtocol[i]->setCurrentIndex(sf[i].protocol);
+			comBoxProtocol[i]->setEnabled(true);
+			tabWS->setCellWidget(j, 2, comBoxProtocol[i]);
 			//check
-			cheBoxTS[j] = new QCheckBox();
-			cheBoxTS[j]->setCheckState((sf[i].switchTS) ? (Qt::Checked) : (Qt::Unchecked));
-			cheBoxTS[j]->setEnabled(true);
-			cheBoxTS[j]->setText(QString(""));
+			cheBoxTS[i] = new QCheckBox();
+			cheBoxTS[i]->setCheckState((sf[i].switchTS) ? (Qt::Checked) : (Qt::Unchecked));
+			cheBoxTS[i]->setEnabled(true);
+			cheBoxTS[i]->setText(QString(""));
 			//tabWS->setCellWidget(j, 3, cheBoxTS[j]);
-			hLayoutTS[j] = new QHBoxLayout();
-			widgetTS[j] = new QWidget(tabWS);
-			hLayoutTS[j]->addWidget(cheBoxTS[j]);
-			hLayoutTS[j]->setMargin(0);                          // 必须添加, 否则CheckBox不能正常显示
-			hLayoutTS[j]->setAlignment(cheBoxTS[j], Qt::AlignCenter);
-			widgetTS[j]->setLayout(hLayoutTS[j]);
-			tabWS->setCellWidget(j, 3, widgetTS[j]);
+			hLayoutTS[i] = new QHBoxLayout();
+			widgetTS[i] = new QWidget(tabWS);
+			hLayoutTS[i]->addWidget(cheBoxTS[i]);
+			hLayoutTS[i]->setMargin(0);                          // 必须添加, 否则CheckBox不能正常显示
+			hLayoutTS[i]->setAlignment(cheBoxTS[i], Qt::AlignCenter);
+			widgetTS[i]->setLayout(hLayoutTS[i]);
+			tabWS->setCellWidget(j, 3, widgetTS[i]);
 			if (0 == sf[i].switchTS) {
 				uncheckflg = 1;
 			}
@@ -246,10 +246,10 @@ int Hdmioptiongui::initStreamingForm()
 			else if (1 == sf[i].streamStatus) {
 				picpath = QString(":/image/rled.png");
 			}
-			labelStauts[j] = new QLabel();
-			labelStauts[j]->setPixmap(QPixmap(picpath).scaled(QSize(25, 25), Qt::KeepAspectRatio));
-			labelStauts[j]->setAlignment(Qt::AlignHCenter);
-			tabWS->setCellWidget(j, 4, labelStauts[j]);
+			labelStauts[i] = new QLabel();
+			labelStauts[i]->setPixmap(QPixmap(picpath).scaled(QSize(25, 25), Qt::KeepAspectRatio));
+			labelStauts[i]->setAlignment(Qt::AlignHCenter);
+			tabWS->setCellWidget(j, 4, labelStauts[i]);
 			j++;
 		}
 	}
@@ -687,14 +687,14 @@ int Hdmioptiongui::getLocal_IP_Port_MAC()
 	tmpbuf[6] = tmpbuf[4];
 	qstripandport_100M.sprintf("%d.%d.%d.%d:%d", tmpbuf[0], tmpbuf[1], tmpbuf[2], \
 		tmpbuf[3], *(u16*)&tmpbuf[5]);
-	QString qstrip_100M = QString("TBS8030:");
-	qstrip_100M.append(qstripandport_100M);
+	//QString qstrip_100M = QString("TBS8030:");
+	//qstrip_100M.append(qstripandport_100M);
 	ui->lin_100M_Ip->setText(qstripandport_100M);
-	qDebug() << qstrip_100M;
-	if (0 == g_or_100M) { //100m
-		netf[col_n]->PItem->setText(0, qstrip_100M);
-		ui->com_Netlist->setItemText(col_n, qstrip_100M);
-	}
+	//qDebug() << qstrip_100M;
+	//if (0 == g_or_100M) { //100m
+		//netf[col_n]->PItem->setText(0, qstrip_100M);
+		//ui->com_Netlist->setItemText(col_n, qstrip_100M);
+	//}
 	/**
 	//2.net mac
 	QString qstrmac_100M;
@@ -720,15 +720,15 @@ int Hdmioptiongui::getLocal_IP_Port_MAC()
 	tmpbuf[6] = tmpbuf[4];
 	qstripandport_1G.sprintf("%d.%d.%d.%d:%d", tmpbuf[0], tmpbuf[1], tmpbuf[2], \
 		tmpbuf[3], *(u16*)&tmpbuf[5]);
-	QString qstrip_1G = QString("TBS8030:");
-	qstrip_1G.append(qstripandport_1G);
+	//QString qstrip_1G = QString("TBS8030:");
+	//qstrip_1G.append(qstripandport_1G);
 	ui->lin_1G_Ip->setText(qstripandport_1G);
-	qDebug() << qstrip_1G;
+	//qDebug() << qstrip_1G;
 
-	if (1 == g_or_100M) { //1g
-		netf[col_n]->PItem->setText(0, qstrip_1G);
-		ui->com_Netlist->setItemText(col_n, qstrip_1G);
-	}
+	//if (1 == g_or_100M) { //1g
+	//	netf[col_n]->PItem->setText(0, qstrip_1G);
+	//	ui->com_Netlist->setItemText(col_n, qstrip_1G);
+	//}
 	/**
 	//2.net mac
 	QString qstrmac_1G;
@@ -993,7 +993,7 @@ void Hdmioptiongui::show_status(Msg *g)
 		//test
 		qbox = new  QMessageBox();
 		qbox->setWindowTitle(tr("information"));
-		qbox->setText(QString("Device is configuring,please wait.."));
+		qbox->setText(QString("Configuring now,please wait.."));
 		qbox->setStandardButtons(0);
 		qbox->setFont(QFont("Microsoft Yahei", fontsize + 9));
 		qbox->setProperty("Form", true);
@@ -1068,8 +1068,8 @@ void Hdmioptiongui::show_status(Msg *g)
 	}
 
 	if (7 == g->type) {
-		ui->com_Netlist->setCurrentIndex(col_n);
-		readNetwork(col_n);
+		ui->com_Netlist->setCurrentIndex(0);
+		readNetwork(0);
 		comchangeflg = 1;
 		//ui->com_Netlist->currentIndexChanged(col_n);
 		return;
@@ -1095,18 +1095,46 @@ void Hdmioptiongui::show_status(Msg *g)
 }
 
 
-void Hdmioptiongui::showNetTuners(QString qs, int num)
+void Hdmioptiongui::showNetTuners(QString qs)
 {
 	qDebug() << "showNetTuners:" << qs;
+	int num = netnum;
 	int i = 0;
-	QString ipch = qs.section(':', 1, 1).trimmed();
-	int portint = qs.section(':', 2, 2).trimmed().toInt();
-	//int ret = get_1000M_or_100M(ipch,portint);
+	QString secipqst;
+	QString ipqs = qs.section('/', 0, 0).trimmed();
+	QString macqs = qs.section('/', 1, 1).trimmed();
 
+	QString ipname = ipqs.section(':', 0, 0).trimmed();
+	QString ipch = ipqs.section(':', 1, 1).trimmed();
+	int portint = ipqs.section(':', 2, 2).trimmed().toInt();
+    int ret = tbs.get_1000M_or_100M(ipch,portint);
+	if (num>0 ) {
+		for (i = 0; i < netnum; i++) {
+			if (macqs == netf[i]->mac_1g) {
+				if (1 == ret) {
+					secipqst = QString("TBS8030:%1:%2/%3:%4")
+						.arg(ipch).arg(portint)
+						.arg(netf[i]->ipaddr).arg(netf[i]->ipport);
+					netf[i]->ipaddr = ipch;
+					netf[i]->ipport = portint;
+				}
+				else if (0 == ret) {
+					secipqst = QString("TBS8030:%1:%2/%3:%4")
+						.arg(netf[i]->ipaddr).arg(netf[i]->ipport)
+						.arg(ipch).arg(portint);
+				}
+				netf[i]->PItem->setText(i, secipqst);
+				ui->com_Netlist->setItemText(i, secipqst);
+				return;
+			}
+		}
+	}
 	netf[num] = new NetInfor();
-	netf[num]->ipname = qs.section(':', 0, 0).trimmed();
-	netf[num]->ipaddr = qs.section(':', 1, 1).trimmed();
-	netf[num]->ipport = qs.section(':', 2, 2).trimmed().toInt();
+	netf[num]->mac_1g = macqs;
+	netf[num]->flag_1g = ret;
+	netf[num]->ipname = ipname;
+	netf[num]->ipaddr = ipch;
+	netf[num]->ipport = portint;
 	char char_net[64] = { '\0' };
 	sprintf(char_net, ":%s:%d", netf[num]->ipaddr.toLatin1().data(), netf[num]->ipport);
 	QString PItemName = netf[num]->ipname;
@@ -1120,7 +1148,6 @@ void Hdmioptiongui::showNetTuners(QString qs, int num)
 	tbs.useless(netf[num]->ipaddr, netf[num]->ipport);
 	getswitchstatus(netf[num]);
 	tbs.useless(netf[num]->ipaddr, netf[num]->ipport);
-
 	netf[num]->validCaptureNum = 0;
 	for (i = 0; i < 16; i++) {
 		if (-1 != netf[num]->Item_tuner[i]) {
@@ -1296,7 +1323,6 @@ void Hdmioptiongui::on_che_Check_all_stateChanged(int idx)
 			if (NULL != cheBoxTS[i]) {
 				cheBoxTS[i]->setCheckState(((n) ? (Qt::Checked) : (Qt::Unchecked)));
 			}
-
 		}
 	}
 
@@ -1372,6 +1398,7 @@ void Hdmioptiongui::initForm()
 	//IconHelper::Instance()->setIcon(ui->labIco, QChar(0xf099), 30);
 	IconHelper::Instance()->setIcon(ui->btnMenu_Min, QChar(0xf068));
 	IconHelper::Instance()->setIcon(ui->btnMenu_Max, QChar(0xf067));
+	//IconHelper::Instance()->setIcon(ui->btnMenu_Max, QChar(0xf096));
 	IconHelper::Instance()->setIcon(ui->btnMenu_Close, QChar(0xf00d));
 
 	IconHelper::Instance()->setIcon(ui->lab_enico, QChar(0xf069), 30);
@@ -1437,7 +1464,7 @@ void Hdmioptiongui::initForm()
 	loadflg = 0;
 	th = new threadTbs();
 	connect(th, SIGNAL(sendMsg(Msg*)), this, SLOT(show_status(Msg*)));
-	connect(th, SIGNAL(sendIp(QString, int)), this, SLOT(showNetTuners(QString, int)));
+	connect(th, SIGNAL(sendIp(QString)), this, SLOT(showNetTuners(QString)));
 	th->start();
 	width_s = this->size().width();
 	height_s = this->size().height();

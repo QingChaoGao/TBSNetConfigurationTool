@@ -205,6 +205,8 @@ class NetInfor {
 public:
 	QString ipname;
 	QString ipaddr;
+	QString mac_1g;
+	int		flag_1g;
 	int     ipport;
 	int     Item_tuner[16];
 	int     validCaptureNum;

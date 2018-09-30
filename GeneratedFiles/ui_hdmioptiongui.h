@@ -136,16 +136,13 @@ public:
     QPushButton *btn_Res;
     QPushButton *btn_Run;
     QWidget *page_Net;
-    QGridLayout *gridLayout_14;
-    QLabel *label_14;
-    QPushButton *btn_Set;
+    QGridLayout *gridLayout_7;
+    QSpacerItem *horizontalSpacer_5;
     QTabWidget *tabNetwork;
     QWidget *TabStreaming;
     QGridLayout *gridLayout_11;
     QCheckBox *che_Check_all;
     QSpacerItem *horizontalSpacer_4;
-    QGroupBox *gStreaming;
-    QGridLayout *gridLayout_7;
     QTableWidget *tabW_Streaming;
     QWidget *TabIpSetting;
     QGridLayout *gridLayout_13;
@@ -168,9 +165,11 @@ public:
     QLabel *label_18;
     QCheckBox *che_DHCP;
     QLineEdit *lin_1G_Ip;
-    QSpacerItem *horizontalSpacer_3;
     QPushButton *btn_Upload;
     QPushButton *btn_Download;
+    QPushButton *btn_Set;
+    QSpacerItem *horizontalSpacer_7;
+    QLabel *label_14;
     QComboBox *com_Netlist;
 
     void setupUi(QDialog *Hdmioptiongui)
@@ -791,20 +790,11 @@ public:
         page_Net->setObjectName(QStringLiteral("page_Net"));
         sizePolicy.setHeightForWidth(page_Net->sizePolicy().hasHeightForWidth());
         page_Net->setSizePolicy(sizePolicy);
-        gridLayout_14 = new QGridLayout(page_Net);
-        gridLayout_14->setObjectName(QStringLiteral("gridLayout_14"));
-        label_14 = new QLabel(page_Net);
-        label_14->setObjectName(QStringLiteral("label_14"));
+        gridLayout_7 = new QGridLayout(page_Net);
+        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
+        horizontalSpacer_5 = new QSpacerItem(75, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_14->addWidget(label_14, 0, 0, 1, 1);
-
-        btn_Set = new QPushButton(page_Net);
-        btn_Set->setObjectName(QStringLiteral("btn_Set"));
-        sizePolicy3.setHeightForWidth(btn_Set->sizePolicy().hasHeightForWidth());
-        btn_Set->setSizePolicy(sizePolicy3);
-        btn_Set->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0);"));
-
-        gridLayout_14->addWidget(btn_Set, 3, 3, 1, 1);
+        gridLayout_7->addItem(horizontalSpacer_5, 0, 4, 1, 1);
 
         tabNetwork = new QTabWidget(page_Net);
         tabNetwork->setObjectName(QStringLiteral("tabNetwork"));
@@ -821,19 +811,11 @@ public:
 
         gridLayout_11->addItem(horizontalSpacer_4, 0, 0, 1, 1);
 
-        gStreaming = new QGroupBox(TabStreaming);
-        gStreaming->setObjectName(QStringLiteral("gStreaming"));
-        gridLayout_7 = new QGridLayout(gStreaming);
-        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
-        tabW_Streaming = new QTableWidget(gStreaming);
+        tabW_Streaming = new QTableWidget(TabStreaming);
         tabW_Streaming->setObjectName(QStringLiteral("tabW_Streaming"));
         tabW_Streaming->setLayoutDirection(Qt::LeftToRight);
 
-        gridLayout_7->addWidget(tabW_Streaming, 1, 0, 1, 2);
-
-        gridLayout_7->setColumnStretch(0, 2);
-
-        gridLayout_11->addWidget(gStreaming, 1, 0, 1, 2);
+        gridLayout_11->addWidget(tabW_Streaming, 1, 0, 1, 3);
 
         tabNetwork->addTab(TabStreaming, QString());
         TabIpSetting = new QWidget();
@@ -947,33 +929,60 @@ public:
 
         tabNetwork->addTab(TabIpSetting, QString());
 
-        gridLayout_14->addWidget(tabNetwork, 1, 0, 1, 4);
-
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_14->addItem(horizontalSpacer_3, 3, 2, 1, 1);
+        gridLayout_7->addWidget(tabNetwork, 1, 0, 1, 5);
 
         btn_Upload = new QPushButton(page_Net);
         btn_Upload->setObjectName(QStringLiteral("btn_Upload"));
+        sizePolicy3.setHeightForWidth(btn_Upload->sizePolicy().hasHeightForWidth());
+        btn_Upload->setSizePolicy(sizePolicy3);
         btn_Upload->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0)"));
 
-        gridLayout_14->addWidget(btn_Upload, 3, 0, 1, 1);
+        gridLayout_7->addWidget(btn_Upload, 2, 0, 1, 1);
 
         btn_Download = new QPushButton(page_Net);
         btn_Download->setObjectName(QStringLiteral("btn_Download"));
+        sizePolicy3.setHeightForWidth(btn_Download->sizePolicy().hasHeightForWidth());
+        btn_Download->setSizePolicy(sizePolicy3);
         btn_Download->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0)"));
 
-        gridLayout_14->addWidget(btn_Download, 3, 1, 1, 1);
+        gridLayout_7->addWidget(btn_Download, 2, 1, 1, 1);
+
+        btn_Set = new QPushButton(page_Net);
+        btn_Set->setObjectName(QStringLiteral("btn_Set"));
+        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(200);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(btn_Set->sizePolicy().hasHeightForWidth());
+        btn_Set->setSizePolicy(sizePolicy5);
+        btn_Set->setMinimumSize(QSize(200, 0));
+        btn_Set->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0);"));
+
+        gridLayout_7->addWidget(btn_Set, 2, 4, 1, 1);
+
+        horizontalSpacer_7 = new QSpacerItem(191, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_7->addItem(horizontalSpacer_7, 0, 0, 1, 1);
+
+        label_14 = new QLabel(page_Net);
+        label_14->setObjectName(QStringLiteral("label_14"));
+        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(label_14->sizePolicy().hasHeightForWidth());
+        label_14->setSizePolicy(sizePolicy6);
+
+        gridLayout_7->addWidget(label_14, 0, 1, 1, 1);
 
         com_Netlist = new QComboBox(page_Net);
         com_Netlist->setObjectName(QStringLiteral("com_Netlist"));
 
-        gridLayout_14->addWidget(com_Netlist, 0, 1, 1, 3);
+        gridLayout_7->addWidget(com_Netlist, 0, 2, 1, 2);
 
-        gridLayout_14->setColumnStretch(0, 1);
-        gridLayout_14->setColumnStretch(1, 1);
-        gridLayout_14->setColumnStretch(2, 1);
-        gridLayout_14->setColumnStretch(3, 1);
+        gridLayout_7->setColumnStretch(0, 1);
+        gridLayout_7->setColumnStretch(1, 1);
+        gridLayout_7->setColumnStretch(2, 1);
+        gridLayout_7->setColumnStretch(3, 1);
+        gridLayout_7->setColumnStretch(4, 1);
         sta_DevWdeget->addWidget(page_Net);
 
         gridLayout_12->addWidget(sta_DevWdeget, 0, 0, 1, 1);
@@ -992,7 +1001,7 @@ public:
         stackedWidget->setCurrentIndex(0);
         sta_DevWdeget->setCurrentIndex(1);
         sta_Mode->setCurrentIndex(2);
-        tabNetwork->setCurrentIndex(0);
+        tabNetwork->setCurrentIndex(1);
         com_Netlist->setCurrentIndex(-1);
 
 
@@ -1016,7 +1025,7 @@ public:
         gbx_SelectPage->setTitle(QString());
         rad_Hdmi->setText(QApplication::translate("Hdmioptiongui", "HDMI", nullptr));
         rad_Net->setText(QApplication::translate("Hdmioptiongui", "Network", nullptr));
-        label_21->setText(QApplication::translate("Hdmioptiongui", "LOCAL MAC:", nullptr));
+        label_21->setText(QApplication::translate("Hdmioptiongui", "MAC for HDMI:", nullptr));
         btn_Refresh->setText(QApplication::translate("Hdmioptiongui", "Refresh Devices", nullptr));
         QTreeWidgetItem *___qtreewidgetitem = tree_Dev->headerItem();
         ___qtreewidgetitem->setText(0, QApplication::translate("Hdmioptiongui", "Device", nullptr));
@@ -1074,10 +1083,7 @@ public:
         label->setText(QApplication::translate("Hdmioptiongui", "Audio Input:", nullptr));
         btn_Res->setText(QApplication::translate("Hdmioptiongui", "Load Defaults", nullptr));
         btn_Run->setText(QApplication::translate("Hdmioptiongui", "Apply", nullptr));
-        label_14->setText(QApplication::translate("Hdmioptiongui", "Network Device list:", nullptr));
-        btn_Set->setText(QApplication::translate("Hdmioptiongui", "Apply", nullptr));
         che_Check_all->setText(QApplication::translate("Hdmioptiongui", "Check all", nullptr));
-        gStreaming->setTitle(QString());
         tabNetwork->setTabText(tabNetwork->indexOf(TabStreaming), QApplication::translate("Hdmioptiongui", "Streaming     ", nullptr));
         gSetting->setTitle(QString());
         groupBox->setTitle(QApplication::translate("Hdmioptiongui", "100M Network:", nullptr));
@@ -1091,8 +1097,10 @@ public:
         label_18->setText(QApplication::translate("Hdmioptiongui", "Local IP&&Server Port:", nullptr));
         che_DHCP->setText(QApplication::translate("Hdmioptiongui", " Enable DHCP", nullptr));
         tabNetwork->setTabText(tabNetwork->indexOf(TabIpSetting), QApplication::translate("Hdmioptiongui", "IP Setting    ", nullptr));
-        btn_Upload->setText(QApplication::translate("Hdmioptiongui", "Upload ", nullptr));
+        btn_Upload->setText(QApplication::translate("Hdmioptiongui", "Restore", nullptr));
         btn_Download->setText(QApplication::translate("Hdmioptiongui", "Configuration Backup", nullptr));
+        btn_Set->setText(QApplication::translate("Hdmioptiongui", "Apply", nullptr));
+        label_14->setText(QApplication::translate("Hdmioptiongui", "Network device list:", nullptr));
     } // retranslateUi
 
 };

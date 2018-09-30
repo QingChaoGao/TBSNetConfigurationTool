@@ -50,7 +50,7 @@ public:
 	int showUI_end();
 signals:
     void sendMsg(Msg* g);
-	void sendIp(QString qs, int num);
+	void sendIp(QString qs);
 protected:
     void run();
 private:

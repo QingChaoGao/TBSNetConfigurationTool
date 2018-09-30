@@ -82,7 +82,7 @@ private slots:
 	void radioClick_HN();
     void showSelectedImage(QTreeWidgetItem * item, int column); //点击树节点事件
     void show_status(Msg* g);
-	void showNetTuners(QString qs, int num);
+	void showNetTuners(QString qs);
     void on_btn_Run_clicked();
 	void on_btn_Set_clicked();;
     void on_sli_H_valueChanged(int value);
