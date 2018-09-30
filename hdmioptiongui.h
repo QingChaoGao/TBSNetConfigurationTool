@@ -63,6 +63,7 @@ private:
     int width_s;
     int height_s;
     int fontsize;
+	int netnum;
 	QMessageBox *qbox;
 	NetInfor **netf;
 	QComboBox *comBoxProtocol[16];
@@ -73,7 +74,6 @@ private:
 	QTableWidget *tabWS;
 	QSqlDatabase database;
 	QSqlQuery *sql_query;
-	int netnum;
     Mymesg *myDialog;
 
 private slots:
@@ -84,7 +84,7 @@ private slots:
     void show_status(Msg* g);
 	void showNetTuners(QString qs);
     void on_btn_Run_clicked();
-	void on_btn_Set_clicked();;
+	void on_btn_Set_clicked();
     void on_sli_H_valueChanged(int value);
     void on_btn_Res_clicked();
     void on_btnMenu_Min_clicked();

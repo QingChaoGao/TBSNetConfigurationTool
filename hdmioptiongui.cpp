@@ -256,7 +256,7 @@ int Hdmioptiongui::initStreamingForm()
 	if (1 == uncheckflg) {
 		ui->che_Check_all->setCheckState(Qt::Unchecked);
 	}
-	else if(0 == uncheckflg){
+	else if (0 == uncheckflg) {
 		ui->che_Check_all->setCheckState(Qt::Checked);
 	}
 	tabWS->setVerticalHeaderLabels(column_header);
@@ -322,7 +322,7 @@ int Hdmioptiongui::Refresh()
 	ui->lin_1G_Gateway->setText(QString(""));
 	ui->che_DHCP->setCheckState(Qt::Unchecked);
 	*/
-    selecttunerflg = 0;
+	selecttunerflg = 0;
 	getNetTuners();
 	return 0;
 }
@@ -1002,7 +1002,7 @@ void Hdmioptiongui::show_status(Msg *g)
 	}
 
 	if (2 == g->type) {
-		while ((NULL == qbox)||(i< 10)) {
+		while ((NULL == qbox) || (i < 10)) {
 			QMSLEEP(1);
 			i++;
 		}
@@ -1013,7 +1013,7 @@ void Hdmioptiongui::show_status(Msg *g)
 		}
 		return;
 	}
-	
+
 	if (4 == g->type) {
 		if (QMessageBox::Ok == QMessageBox::information(this, tr("information"),
 			tr("Success                                    "),
@@ -1080,7 +1080,7 @@ void Hdmioptiongui::show_status(Msg *g)
 		myDialog->exec();
 		return;
 	}
-	
+
 	if (9 == g->type) {
 		if (NULL != myDialog) {
 			myDialog->close();
@@ -1098,7 +1098,6 @@ void Hdmioptiongui::show_status(Msg *g)
 void Hdmioptiongui::showNetTuners(QString qs)
 {
 	qDebug() << "showNetTuners:" << qs;
-	int num = netnum;
 	int i = 0;
 	QString secipqst;
 	QString ipqs = qs.section('/', 0, 0).trimmed();
@@ -1107,63 +1106,61 @@ void Hdmioptiongui::showNetTuners(QString qs)
 	QString ipname = ipqs.section(':', 0, 0).trimmed();
 	QString ipch = ipqs.section(':', 1, 1).trimmed();
 	int portint = ipqs.section(':', 2, 2).trimmed().toInt();
-    int ret = tbs.get_1000M_or_100M(ipch,portint);
-	if (num>0 ) {
-		for (i = 0; i < netnum; i++) {
-			if (macqs == netf[i]->mac_1g) {
-				if (1 == ret) {
-					secipqst = QString("TBS8030:%1:%2/%3:%4")
-						.arg(ipch).arg(portint)
-						.arg(netf[i]->ipaddr).arg(netf[i]->ipport);
-					netf[i]->ipaddr = ipch;
-					netf[i]->ipport = portint;
-				}
-				else if (0 == ret) {
-					secipqst = QString("TBS8030:%1:%2/%3:%4")
-						.arg(netf[i]->ipaddr).arg(netf[i]->ipport)
-						.arg(ipch).arg(portint);
-				}
-				netf[i]->PItem->setText(i, secipqst);
-				ui->com_Netlist->setItemText(i, secipqst);
-				return;
+	int ret = tbs.get_1000M_or_100M(ipch, portint);
+	for (i = 0; i < netnum; i++) {
+		if (macqs == netf[i]->mac_1g) {
+			if (1 == ret) {
+				secipqst = QString("TBS8030:%1:%2/%3:%4")
+					.arg(ipch).arg(portint)
+					.arg(netf[i]->ipaddr).arg(netf[i]->ipport);
+				netf[i]->ipaddr = ipch;
+				netf[i]->ipport = portint;
 			}
+			else if (0 == ret) {
+				secipqst = QString("TBS8030:%1:%2/%3:%4")
+					.arg(netf[i]->ipaddr).arg(netf[i]->ipport)
+					.arg(ipch).arg(portint);
+			}
+			
+			ui->com_Netlist->setItemText(i, secipqst);
+			netf[i]->PItem->setText(0, secipqst);
+			return;
 		}
 	}
-	netf[num] = new NetInfor();
-	netf[num]->mac_1g = macqs;
-	netf[num]->flag_1g = ret;
-	netf[num]->ipname = ipname;
-	netf[num]->ipaddr = ipch;
-	netf[num]->ipport = portint;
+	netf[netnum] = new NetInfor();
+	netf[netnum]->mac_1g = macqs;
+	netf[netnum]->flag_1g = ret;
+	netf[netnum]->ipname = ipname;
+	netf[netnum]->ipaddr = ipch;
+	netf[netnum]->ipport = portint;
 	char char_net[64] = { '\0' };
-	sprintf(char_net, ":%s:%d", netf[num]->ipaddr.toLatin1().data(), netf[num]->ipport);
-	QString PItemName = netf[num]->ipname;
+	sprintf(char_net, ":%s:%d", netf[netnum]->ipaddr.toLatin1().data(), netf[netnum]->ipport);
+	QString PItemName = netf[netnum]->ipname;
 	PItemName.append(char_net);
 	/*************/
-	ui->com_Netlist->addItem(PItemName, num);
-
+	ui->com_Netlist->addItem(PItemName, netnum);
 	ui->tree_Dev->setIconSize(QSize(25, 25));
-	netf[num]->PItem = new QTreeWidgetItem(ui->tree_Dev, QStringList(PItemName));
-	netf[num]->PItem->setIcon(0, QIcon(":/qss/psblack/uilogo/net.png"));
-	tbs.useless(netf[num]->ipaddr, netf[num]->ipport);
-	getswitchstatus(netf[num]);
-	tbs.useless(netf[num]->ipaddr, netf[num]->ipport);
-	netf[num]->validCaptureNum = 0;
+	netf[netnum]->PItem = new QTreeWidgetItem(ui->tree_Dev, QStringList(PItemName));
+	netf[netnum]->PItem->setIcon(0, QIcon(":/qss/psblack/uilogo/net.png"));
+	tbs.useless(netf[netnum]->ipaddr, netf[netnum]->ipport);
+	getswitchstatus(netf[netnum]);
+	tbs.useless(netf[netnum]->ipaddr, netf[netnum]->ipport);
+	netf[netnum]->validCaptureNum = 0;
 	for (i = 0; i < 16; i++) {
-		if (-1 != netf[num]->Item_tuner[i]) {
-			netf[num]->Item[i] = new QTreeWidgetItem(netf[num]->PItem,
+		if (-1 != netf[netnum]->Item_tuner[i]) {
+			netf[netnum]->Item[i] = new QTreeWidgetItem(netf[netnum]->PItem,
 				QStringList(QString("Capture %1").arg(i)));
-			netf[num]->Item[i]->setIcon(0, QIcon(":/qss/psblack/chun.png"));
-			netf[num]->PItem->addChild(netf[num]->Item[i]);
-			netf[num]->validCaptureNum++;
+			netf[netnum]->Item[i]->setIcon(0, QIcon(":/qss/psblack/chun.png"));
+			netf[netnum]->PItem->addChild(netf[netnum]->Item[i]);
+			netf[netnum]->validCaptureNum++;
 		}
 		else {
-			netf[num]->Item[i] = NULL;
+			netf[netnum]->Item[i] = NULL;
 		}
 	}
 
 	ui->tree_Dev->expandAll();
-	netnum = num + 1;
+	netnum++;
 	return;
 }
 

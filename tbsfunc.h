@@ -239,6 +239,7 @@ extern u8 local_ip_port_mac_flg;
 extern u8 loadflg;
 extern 	MATCH_IP mip[16];
 extern int netdevno;
+
 class tbsfunc
 {
 public:
