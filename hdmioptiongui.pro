@@ -20,8 +20,8 @@ DESTDIR     = $$PWD/../bin
 SOURCES     += main.cpp \
     tbsfunc.cpp \
     threadtbs.cpp \
-    mymesg.cpp \
-    mymesg.cpp
+    mymesg.cpp 
+
 SOURCES     += iconhelper.cpp
 SOURCES     += appinit.cpp
 SOURCES     += hdmioptiongui.cpp
@@ -29,8 +29,8 @@ SOURCES     += hdmioptiongui.cpp
 HEADERS     += iconhelper.h \
     tbsfunc.h \
     threadtbs.h \
-    mymesg.h \
-    mymesg.h
+    mymesg.h 
+
 HEADERS     += appinit.h
 HEADERS     += hdmioptiongui.h
 
