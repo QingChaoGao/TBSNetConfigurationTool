@@ -88,6 +88,9 @@ extern int uncheckflg;
 extern int reflashflg;
 extern int uselessflg;
 extern int selecttunerflg;
+extern int refreshTimerflg;
+extern int udprwflg;
+
 #ifndef WRITE
 #define WRITE            0
 #endif
@@ -291,6 +294,7 @@ public:
 	void udp_REG64_rd(int subAddr,
 		unsigned char num,
 		unsigned char *rdbuffer);
+	void udp_REG64_rd_cpy(int subAddr, unsigned char num, unsigned char * rdbuffer);
 	void udp_REG64_wt(int subAddr,
 		unsigned char num,
 		unsigned char *wtbuffer);

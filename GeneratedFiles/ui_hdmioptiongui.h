@@ -1001,7 +1001,7 @@ public:
         stackedWidget->setCurrentIndex(0);
         sta_DevWdeget->setCurrentIndex(1);
         sta_Mode->setCurrentIndex(2);
-        tabNetwork->setCurrentIndex(1);
+        tabNetwork->setCurrentIndex(0);
         com_Netlist->setCurrentIndex(-1);
 
 
@@ -1091,7 +1091,7 @@ public:
         label_17->setText(QApplication::translate("Hdmioptiongui", "Local Netmask:", nullptr));
         lin_100M_Ip->setText(QString());
         label_22->setText(QApplication::translate("Hdmioptiongui", "local Gateway:", nullptr));
-        groupBox_2->setTitle(QApplication::translate("Hdmioptiongui", "1000M Network:", nullptr));
+        groupBox_2->setTitle(QApplication::translate("Hdmioptiongui", "1G Network:", nullptr));
         label_23->setText(QApplication::translate("Hdmioptiongui", "local Gateway:", nullptr));
         label_20->setText(QApplication::translate("Hdmioptiongui", "Local Netmask:", nullptr));
         label_18->setText(QApplication::translate("Hdmioptiongui", "Local IP&&Server Port:", nullptr));

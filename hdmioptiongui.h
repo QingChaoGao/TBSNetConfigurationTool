@@ -50,7 +50,6 @@ public:
 
 	int Refresh();
 	int readNetwork(int idx);
-
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
 private:
@@ -75,6 +74,7 @@ private:
 	QSqlDatabase database;
 	QSqlQuery *sql_query;
     Mymesg *myDialog;
+	QTimer *refreshTimer;
 
 private slots:
     void radioClick();
@@ -83,6 +83,8 @@ private slots:
     void showSelectedImage(QTreeWidgetItem * item, int column); //点击树节点事件
     void show_status(Msg* g);
 	void showNetTuners(QString qs);
+	void refreshTimeoutfunc(void);
+
     void on_btn_Run_clicked();
 	void on_btn_Set_clicked();
     void on_sli_H_valueChanged(int value);
@@ -96,7 +98,6 @@ private slots:
 	void on_che_Check_all_stateChanged(int idx);
 	void on_btn_Download_clicked();
 	void on_btn_Upload_clicked();
-	void on_btn_Refresh_clicked();
-
+	void on_btn_Refresh_clicked(); 
 };
 #endif

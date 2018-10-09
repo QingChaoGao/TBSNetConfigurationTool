@@ -64,11 +64,13 @@ Hdmioptiongui::Hdmioptiongui(QWidget *parent) :
 	ui->setupUi(this);
 	initForm();
 	getNetTuners();
-
 }
 
 Hdmioptiongui::~Hdmioptiongui()
 {
+	if (NULL != refreshTimer) {
+		delete refreshTimer;
+	}
 	swflg = 1;
 	u8 a = 0;
 	if (udpfd > 2) {
@@ -262,12 +264,16 @@ int Hdmioptiongui::initStreamingForm()
 	tabWS->setVerticalHeaderLabels(column_header);
 	tabWS->show();
 	uncheckflg = 2;
+	refreshTimer->start(2000);
 	return 0;
 }
 
 int Hdmioptiongui::Refresh()
 {
 	// release net dev
+	if (NULL != refreshTimer) {
+		refreshTimer->stop();
+	}
 	u8 a = 0;
 	if (udpfd > 2) {
 		if (2 != local_ip_port_mac_flg) {
@@ -1089,8 +1095,6 @@ void Hdmioptiongui::show_status(Msg *g)
 		}
 		return;
 	}
-
-
 #endif
 }
 
@@ -1370,6 +1374,36 @@ void Hdmioptiongui::on_btn_Refresh_clicked()
 	Refresh();
 }
 
+void Hdmioptiongui::refreshTimeoutfunc(void)
+{
+	if (udpfd < 3) {
+		return;
+	}
+	if (mode != 0) {
+		return;
+	}
+	if (0 == udprwflg) {
+		return;
+	}
+	qDebug("refresh");
+	u8 tmp[3] = { 0 };
+	QString picpath = QString("");
+	tbs.udp_REG64_rd_cpy(0x4000 + 7 * 4, 2, &tmp[1]);
+	tmp[0] = tmp[2];
+	for (int i = 0; i < 16;i++) {
+		if (NULL != labelStauts[i]) {
+			if (0 == (((*(u16*)&tmp[0]) >> i) & 0x01)) {
+				picpath = QString(":/image/gled.png");
+			}
+			else {
+				picpath = QString(":/image/rled.png");
+			}
+			labelStauts[i]->setPixmap(QPixmap(picpath).scaled(QSize(25, 25), Qt::KeepAspectRatio));
+		}
+	}
+}
+
+
 int Hdmioptiongui::getNetTuners()
 {
 	netf = new NetInfor*[64];
@@ -1477,6 +1511,8 @@ void Hdmioptiongui::initForm()
 	}
 	tabWS = ui->tabW_Streaming;
 	myDialog = NULL;
+	refreshTimer = new QTimer(this);
+	connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTimeoutfunc()));
 }
 
 void Hdmioptiongui::init_sql(QString path)
@@ -1632,6 +1668,9 @@ void Hdmioptiongui::on_btn_Run_clicked()
 {
 	if (1 != comchangeflg) {
 		return;
+	}
+	if (1 == refreshTimerflg) {
+		refreshTimer->stop();
 	}
 	if ((udpfd < 3) || (selecttunerflg == 0)) {
 		if (QMessageBox::Ok == QMessageBox::warning(this, tr("warn"),

@@ -21,6 +21,8 @@ int uncheckflg = 0;
 int reflashflg = 0; 
 int uselessflg = 0;
 int selecttunerflg = 0;
+int refreshTimerflg = 1;
+int udprwflg = 0;
 #ifdef Q_OS_WIN //windows
 SOCKET udpfd;
 WSADATA wsaData;
@@ -795,6 +797,16 @@ int tbsfunc::reRtpUdpStreaming()
 
 void tbsfunc::udp_REG64_rd(int subAddr, unsigned char num, unsigned char * rdbuffer)
 {
+	int r = 0;
+	while (1 != refreshTimerflg) {
+		QMSLEEP(1);
+		++r;
+		qDebug("refreshTimerflg = %d",refreshTimerflg);
+		if (r >= 50) {
+			return;
+		}
+	}
+	udprwflg = 0;
 	char sendbuff[64] = { 0 };
 	char recvbuff[64] = { 0 };
 	len = sizeof(udpsockaddr);
@@ -811,11 +823,13 @@ void tbsfunc::udp_REG64_rd(int subAddr, unsigned char num, unsigned char * rdbuf
 	n = sendto(udpfd, sendbuff, 64, 0, (struct sockaddr*)&udpsockaddr, len);
 	if (n < 0) {
 		qDebug() << "udp_REG64_rd:sendto time out";
+		udprwflg = 1;
 		return;
 	}
 	n = recvfrom(udpfd, recvbuff, 64, 0, (struct sockaddr*)&udpsockaddr, &len);
 	if (n < 0) {
 		qDebug() << "udp_REG64_rd:recvfrom3 time out";
+		udprwflg = 1;
 		return;
 	}
 	for (int i = 0; i < 12; i++) {
@@ -825,11 +839,61 @@ void tbsfunc::udp_REG64_rd(int subAddr, unsigned char num, unsigned char * rdbuf
 			j++;
 		}
 	}
+	udprwflg = 1;
 	return;
 }
 
+void tbsfunc::udp_REG64_rd_cpy(int subAddr, unsigned char num, unsigned char * rdbuffer)
+{
+	refreshTimerflg = 0;
+	char sendbuff[64] = { 0 };
+	char recvbuff[64] = { 0 };
+	len = sizeof(udpsockaddr);
+	int n = 0;
+	int j = 0;
+	// 27bit address
+	sendbuff[0] = 0xc0 + (u8)((subAddr & 0x07000000) >> 24);
+	sendbuff[1] = (u8)((subAddr & 0x00ff0000) >> 16);
+	sendbuff[2] = (u8)((subAddr & 0x0000ff00) >> 8);
+	sendbuff[3] = (u8)((subAddr & 0x000000ff));
+
+	//sendbuff[2] = 0x80;
+	//sendbuff[3] = 0x20;
+	n = sendto(udpfd, sendbuff, 64, 0, (struct sockaddr*)&udpsockaddr, len);
+	if (n < 0) {
+		qDebug() << "udp_REG64_rd:sendto time out";
+		refreshTimerflg = 1;
+		return;
+	}
+	n = recvfrom(udpfd, recvbuff, 64, 0, (struct sockaddr*)&udpsockaddr, &len);
+	if (n < 0) {
+		qDebug() << "udp_REG64_rd:recvfrom3 time out";
+		refreshTimerflg = 1;
+		return;
+	}
+	for (int i = 0; i < 12; i++) {
+		//	qDebug("udp_REG64_rd recv:%d=%02x", i, (u8)recvbuff[i]);
+		if ((i > 3) && (j < num)) {
+			rdbuffer[j] = (u8)recvbuff[i];
+			j++;
+		}
+	}
+	refreshTimerflg = 1;
+	return;
+}
+
+
 void tbsfunc::udp_REG64_wt(int subAddr, unsigned char num, unsigned char * wtbuffer)
 {
+	int r = 0;
+	while (1 != refreshTimerflg) {
+		QMSLEEP(1);
+		++r;
+		if (r >= 50) {
+			return;
+		}
+	}
+	udprwflg = 0;
 	char sendbuff[64] = { 0 };
 	char recvbuff[64] = { 0 };
 	len = sizeof(udpsockaddr);
@@ -849,6 +913,7 @@ void tbsfunc::udp_REG64_wt(int subAddr, unsigned char num, unsigned char * wtbuf
 	n = sendto(udpfd, sendbuff, 64, 0, (struct sockaddr*)&udpsockaddr, len);
 	if (n < 0) {
 		qDebug() << "udp_REG64_wt:sendto time out";
+		udprwflg = 1;
 		return;
 	}
 
@@ -856,11 +921,13 @@ void tbsfunc::udp_REG64_wt(int subAddr, unsigned char num, unsigned char * wtbuf
 	n = recvfrom(udpfd, recvbuff, 64, 0, (struct sockaddr*)&udpsockaddr, &len);
 	if (n < 0) {
 		qDebug() << "udp_REG64_wt:recvfrom time out";
+		udprwflg = 1;
 		return;
 	}
 	for (int i = 0; i < 12; i++) {
 		//qDebug("udp_REG64_wt:recv:%d=%02x", i, (u8)recvbuff[i]);
 	}
+	udprwflg = 1;
 	return;
 }
 

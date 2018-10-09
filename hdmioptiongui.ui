@@ -1169,7 +1169,7 @@
               <item row="1" column="0" colspan="5">
                <widget class="QTabWidget" name="tabNetwork">
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="TabStreaming">
                  <attribute name="title">
@@ -1286,7 +1286,7 @@
                      <item row="1" column="0">
                       <widget class="QGroupBox" name="groupBox_2">
                        <property name="title">
-                        <string>1000M Network:</string>
+                        <string>1G Network:</string>
                        </property>
                        <layout class="QGridLayout" name="gridLayout_9">
                         <item row="3" column="0">
