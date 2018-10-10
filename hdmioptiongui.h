@@ -28,7 +28,7 @@ public:
 	void init_sql(QString path);
 	void updateStream_sql(StreamingForm *stream);
 	void readStream_sql(StreamingForm *stream);
-	int getHostIpAddress(QString * qst, int num);
+	int getHostIpAddress(QString * qst, int * num);
 	u8 getNetworkSegment(QString ip);
 
 	int readBuffer(void);

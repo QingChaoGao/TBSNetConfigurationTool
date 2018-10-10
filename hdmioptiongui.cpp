@@ -1410,7 +1410,7 @@ int Hdmioptiongui::getNetTuners()
 	netnum = 0;
 	gatewaynum = 0;
 	//QString qstingip = 
-	getHostIpAddress(qstrgateway, gatewaynum);
+	getHostIpAddress(qstrgateway, &gatewaynum);
 	//netseg = getNetworkSegment(qstingip);
 	QMSLEEP(2);
 	mode = 7;
@@ -1634,9 +1634,8 @@ void Hdmioptiongui::readStream_sql(StreamingForm *stream)
 	}
 }
 
-int Hdmioptiongui::getHostIpAddress(QString *qst, int num)
+int Hdmioptiongui::getHostIpAddress(QString *qst, int* num)
 {
-
 	QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
 	// 获取第一个本主机的IPv4地址
 	int nListSize = ipAddressesList.size();
@@ -1648,13 +1647,14 @@ int Hdmioptiongui::getHostIpAddress(QString *qst, int num)
 			(ipAddressesList.at(i).toString().left(3).toInt() <= 223)) {
 			qst[i] = ipAddressesList.at(i).toString();
 			qDebug() << "local PC ip:" << qst[i];
-			num++;
+			(*num)++;
 		}
 	}
 	// 如果没有找到，则以本地IP地址为IP
-	if (0 == num) {
+	if (0 == (*num)) {
 		qst[0] = QHostAddress(QHostAddress::LocalHost).toString();
 		qDebug() << "local PC ip:" << qst[0];
+		(*num) = 1;
 	}
 	return 0;
 }
