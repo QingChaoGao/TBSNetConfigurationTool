@@ -424,15 +424,14 @@ void threadTbs::udpMulticastClinet()
 						((u8)(0xab) != (u8)(recvbuf[14])))) {
 				continue;
 			}
-			int w = 0;
-			for ( w = 0; w < gatewaynum; w++) {
+			for ( k = 0; k< gatewaynum; k++) {
 				if (true == qstrgateway[k].contains(QString("%1.%2.%3")
 					.arg((u8)recvbuf[6]).arg((u8)recvbuf[7])
 					.arg((u8)recvbuf[8]), Qt::CaseSensitive)) {
 					break;
 				}
 			}
-			if (w == gatewaynum) {
+			if (k == gatewaynum) {
 				continue;
 			}
 
