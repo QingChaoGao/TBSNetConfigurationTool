@@ -15,7 +15,7 @@ struct sockaddr_in udpsockaddr;
 MATCH_IP mip[16] = { 0 };
 int comchangeflg = 0;
 int hstflg = 0; 
-u8 netseg = 0;
+
 int timeoutflg = 0;
 int uncheckflg = 0;
 int reflashflg = 0; 
@@ -23,6 +23,8 @@ int uselessflg = 0;
 int selecttunerflg = 0;
 int refreshTimerflg = 1;
 int udprwflg = 0;
+int gatewaynum = 0;
+QString qstrgateway[64];
 #ifdef Q_OS_WIN //windows
 SOCKET udpfd;
 WSADATA wsaData;

@@ -82,7 +82,6 @@ extern bool maincpu;
 extern struct sockaddr_in udpsockaddr;
 extern int comchangeflg;
 extern int hstflg;
-extern u8 netseg;
 extern int timeoutflg;
 extern int uncheckflg;
 extern int reflashflg;
@@ -90,7 +89,8 @@ extern int uselessflg;
 extern int selecttunerflg;
 extern int refreshTimerflg;
 extern int udprwflg;
-
+extern int gatewaynum;
+extern QString qstrgateway[64];
 #ifndef WRITE
 #define WRITE            0
 #endif

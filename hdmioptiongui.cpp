@@ -1125,7 +1125,7 @@ void Hdmioptiongui::showNetTuners(QString qs)
 					.arg(netf[i]->ipaddr).arg(netf[i]->ipport)
 					.arg(ipch).arg(portint);
 			}
-			
+
 			ui->com_Netlist->setItemText(i, secipqst);
 			netf[i]->PItem->setText(0, secipqst);
 			return;
@@ -1390,7 +1390,7 @@ void Hdmioptiongui::refreshTimeoutfunc(void)
 	QString picpath = QString("");
 	tbs.udp_REG64_rd_cpy(0x4000 + 7 * 4, 2, &tmp[1]);
 	tmp[0] = tmp[2];
-	for (int i = 0; i < 16;i++) {
+	for (int i = 0; i < 16; i++) {
 		if (NULL != labelStauts[i]) {
 			if (0 == (((*(u16*)&tmp[0]) >> i) & 0x01)) {
 				picpath = QString(":/image/gled.png");
@@ -1408,8 +1408,10 @@ int Hdmioptiongui::getNetTuners()
 {
 	netf = new NetInfor*[64];
 	netnum = 0;
-	QString qstingip = getHostIpAddress();
-	netseg = getNetworkSegment(qstingip);
+	gatewaynum = 0;
+	//QString qstingip = 
+	getHostIpAddress(qstrgateway, gatewaynum);
+	//netseg = getNetworkSegment(qstingip);
 	QMSLEEP(2);
 	mode = 7;
 	return 0;
@@ -1632,25 +1634,29 @@ void Hdmioptiongui::readStream_sql(StreamingForm *stream)
 	}
 }
 
-QString Hdmioptiongui::getHostIpAddress(void)
+int Hdmioptiongui::getHostIpAddress(QString *qst, int num)
 {
-	QString strIpAddress;
+
 	QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
 	// 获取第一个本主机的IPv4地址
 	int nListSize = ipAddressesList.size();
 	for (int i = 0; i < nListSize; ++i)
 	{
 		if (ipAddressesList.at(i) != QHostAddress::LocalHost &&
-			ipAddressesList.at(i).toIPv4Address()) {
-			strIpAddress = ipAddressesList.at(i).toString();
-			break;
+			ipAddressesList.at(i).toIPv4Address() &&
+			(ipAddressesList.at(i) != QHostAddress::Null) &&
+			(ipAddressesList.at(i).toString().left(3).toInt() <= 223)) {
+			qst[i] = ipAddressesList.at(i).toString();
+			qDebug() << "local PC ip:" << qst[i];
+			num++;
 		}
 	}
 	// 如果没有找到，则以本地IP地址为IP
-	if (strIpAddress.isEmpty())
-		strIpAddress = QHostAddress(QHostAddress::LocalHost).toString();
-	qDebug() << "local PC ip:" << strIpAddress;
-	return strIpAddress;
+	if (0 == num) {
+		qst[0] = QHostAddress(QHostAddress::LocalHost).toString();
+		qDebug() << "local PC ip:" << qst[0];
+	}
+	return 0;
 }
 
 u8 Hdmioptiongui::getNetworkSegment(QString ip)
