@@ -70,6 +70,7 @@ Hdmioptiongui::~Hdmioptiongui()
 {
 	if (NULL != refreshTimer) {
 		delete refreshTimer;
+		QMSLEEP(1);
 	}
 	swflg = 1;
 	u8 a = 0;
@@ -108,7 +109,6 @@ Hdmioptiongui::~Hdmioptiongui()
 	delete ui;
 
 }
-
 
 int Hdmioptiongui::getswitchstatus(NetInfor *nf)
 {
@@ -264,7 +264,7 @@ int Hdmioptiongui::initStreamingForm()
 	tabWS->setVerticalHeaderLabels(column_header);
 	tabWS->show();
 	uncheckflg = 2;
-	refreshTimer->start(2000);
+	refreshTimer->start(4000);
 	return 0;
 }
 
@@ -391,6 +391,7 @@ int Hdmioptiongui::readNetwork(int idx)
 
 int Hdmioptiongui::readBuffer()
 {
+	rebufferflg = 1;
 	//1.inputfmt
 	Iputfmt();
 	//2.hdmi mac
@@ -411,6 +412,7 @@ int Hdmioptiongui::readBuffer()
 	//getLocal_IP_Port_MAC();
 	//10.getStreamingArg
 	//getStreamingArg();
+	rebufferflg = 0;
 	return 0;
 }
 
@@ -900,11 +902,12 @@ void Hdmioptiongui::radioClick_HN()
 
 	if (name == "HDMI Capture Card Setting") {
 		ui->sta_DevWdeget->setCurrentIndex(0);
-
+		networksetflg = 0;
 	}
 	else if (name == " Streaming&&Network Setting") {
 		ui->sta_DevWdeget->setCurrentIndex(1);
 		ui->tabNetwork->setCurrentIndex(0);
+		networksetflg = 1;
 	}
 }
 
@@ -1243,6 +1246,7 @@ void Hdmioptiongui::on_com_Netlist_currentIndexChanged(int idx)
 	if (0 != mode) {
 		return;
 	}
+
 	u8 a = 0;
 	qDebug("on_com_Netlist_currentIndexChanged idx = %d", idx);
 	if (idx < 0) {
@@ -1253,6 +1257,9 @@ void Hdmioptiongui::on_com_Netlist_currentIndexChanged(int idx)
 		//		return;
 		//	}
 		return;
+	}
+	if (NULL != refreshTimer) {
+		refreshTimer->stop();
 	}
 	if (1 == maincpu) {
 		maincpu = 0;
@@ -1273,7 +1280,13 @@ void Hdmioptiongui::on_com_Netlist_currentIndexChanged(int idx)
 			tr("Device not selected,or open fail"),
 			QMessageBox::Ok,
 			QMessageBox::Ok)) {
+			if (NULL != refreshTimer) {
+				refreshTimer->start(4000);
+			}
 			return;
+		}
+		if (NULL != refreshTimer) {
+			refreshTimer->start(4000);
 		}
 		return;
 	}
@@ -1295,8 +1308,6 @@ void Hdmioptiongui::on_com_Netlist_currentIndexChanged(int idx)
 		tunerarry[i] = netf[col_n]->Item_tuner[i];
 	}
 	//if (0 == isIPSettingFlg) {
-	getStreamingArg();
-	initStreamingForm();
 	//}
 	//else if (1 == isIPSettingFlg) {
 	getLocal_IP_Port_MAC();
@@ -1305,6 +1316,8 @@ void Hdmioptiongui::on_com_Netlist_currentIndexChanged(int idx)
 	//	QMSLEEP(1);
 	//}
 	//mode = 9;
+	getStreamingArg();
+	initStreamingForm();
 }
 
 void Hdmioptiongui::on_che_Check_all_stateChanged(int idx)
@@ -1385,9 +1398,29 @@ void Hdmioptiongui::refreshTimeoutfunc(void)
 	if (0 == udprwflg) {
 		return;
 	}
+
+	if ((1 != networksetflg) || (0 != isIPSettingFlg)) {
+		return;
+	}
+	if (0 != rebufferflg) {
+		return;
+	}
+
 	qDebug("refresh");
 	u8 tmp[3] = { 0 };
 	QString picpath = QString("");
+	if (63081 == typeId) {
+		u8 a = 0;
+		tbs.monopolizeCpu_w(0x00, &a, 1);//set 0
+		typeId = 6316;
+	}
+	udpfd = tbs.udpClose(udpfd);
+	int idx = ui->com_Netlist->currentIndex();
+	udpfd = tbs.udpOpen(netf[idx]->ipaddr, netf[idx]->ipport);
+	if (udpfd < 3) {
+		qDebug("refresh udpfd erro");
+		return;
+	}
 	tbs.udp_REG64_rd_cpy(0x4000 + 7 * 4, 2, &tmp[1]);
 	tmp[0] = tmp[2];
 	for (int i = 0; i < 16;i++) {

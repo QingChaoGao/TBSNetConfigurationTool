@@ -23,6 +23,8 @@ int uselessflg = 0;
 int selecttunerflg = 0;
 int refreshTimerflg = 1;
 int udprwflg = 0;
+int networksetflg = 0;
+int rebufferflg = 0;
 #ifdef Q_OS_WIN //windows
 SOCKET udpfd;
 WSADATA wsaData;
@@ -1016,7 +1018,7 @@ bool tbsfunc::Check_host_status(unsigned char cs)
 	unsigned char j, tmp[4];
 	int i;
 	int count = 0;
-	int time =4000;
+	int time =2000;//4000
 	bool ret = 0;
 	//if (1 == uselessflg) {
 	//	time = 10;

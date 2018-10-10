@@ -90,7 +90,8 @@ extern int uselessflg;
 extern int selecttunerflg;
 extern int refreshTimerflg;
 extern int udprwflg;
-
+extern int networksetflg;
+extern int rebufferflg;
 #ifndef WRITE
 #define WRITE            0
 #endif

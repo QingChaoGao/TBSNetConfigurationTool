@@ -30,7 +30,6 @@ public:
 	void readStream_sql(StreamingForm *stream);
 	QString getHostIpAddress(void);
 	u8 getNetworkSegment(QString ip);
-
 	int readBuffer(void);
     //encoded
 	int Iputfmt();
