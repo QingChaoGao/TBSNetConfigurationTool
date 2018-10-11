@@ -1115,16 +1115,22 @@ void Hdmioptiongui::showNetTuners(QString qs)
 	for (i = 0; i < netnum; i++) {
 		if (macqs == netf[i]->mac_1g) {
 			if (1 == ret) {
-				secipqst = QString("TBS8030:%1:%2/%3:%4")
-					.arg(ipch).arg(portint)
-					.arg(netf[i]->ipaddr).arg(netf[i]->ipport);
+				//secipqst = QString("TBS8030:%1:%2/%3:%4")
+				secipqst = QString("%1/%2")
+					.arg(ipch)
+					//.arg(portint)
+					.arg(netf[i]->ipaddr);
+					//.arg(netf[i]->ipport);
 				netf[i]->ipaddr = ipch;
 				netf[i]->ipport = portint;
 			}
 			else if (0 == ret) {
-				secipqst = QString("TBS8030:%1:%2/%3:%4")
-					.arg(netf[i]->ipaddr).arg(netf[i]->ipport)
-					.arg(ipch).arg(portint);
+				//secipqst = QString("TBS8030:%1:%2/%3:%4")
+				secipqst = QString("%1/%2")
+					.arg(netf[i]->ipaddr)
+					//.arg(netf[i]->ipport)
+					.arg(ipch);
+					//.arg(portint);
 			}
 
 			ui->com_Netlist->setItemText(i, secipqst);
@@ -1139,9 +1145,11 @@ void Hdmioptiongui::showNetTuners(QString qs)
 	netf[netnum]->ipaddr = ipch;
 	netf[netnum]->ipport = portint;
 	char char_net[64] = { '\0' };
-	sprintf(char_net, ":%s:%d", netf[netnum]->ipaddr.toLatin1().data(), netf[netnum]->ipport);
-	QString PItemName = netf[netnum]->ipname;
-	PItemName.append(char_net);
+	sprintf(char_net, "%s", netf[netnum]->ipaddr.toLatin1().data());
+	//sprintf(char_net, ":%s:%d", netf[netnum]->ipaddr.toLatin1().data(), netf[netnum]->ipport);
+	//QString PItemName = netf[netnum]->ipname;
+	QString PItemName = QString(char_net);
+	//PItemName.append(char_net);
 	/*************/
 	ui->com_Netlist->addItem(PItemName, netnum);
 	ui->tree_Dev->setIconSize(QSize(25, 25));

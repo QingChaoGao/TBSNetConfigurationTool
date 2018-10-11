@@ -783,8 +783,8 @@ public:
 
         gridLayout_10->addWidget(group, 1, 1, 1, 1);
 
-        gridLayout_10->setColumnStretch(0, 1);
-        gridLayout_10->setColumnStretch(1, 3);
+        gridLayout_10->setColumnStretch(0, 2);
+        gridLayout_10->setColumnStretch(1, 5);
         sta_DevWdeget->addWidget(page_hdmi);
         page_Net = new QWidget();
         page_Net->setObjectName(QStringLiteral("page_Net"));
@@ -999,9 +999,9 @@ public:
         retranslateUi(Hdmioptiongui);
 
         stackedWidget->setCurrentIndex(0);
-        sta_DevWdeget->setCurrentIndex(1);
+        sta_DevWdeget->setCurrentIndex(0);
         sta_Mode->setCurrentIndex(2);
-        tabNetwork->setCurrentIndex(0);
+        tabNetwork->setCurrentIndex(1);
         com_Netlist->setCurrentIndex(-1);
 
 
