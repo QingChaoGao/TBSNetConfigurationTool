@@ -8,7 +8,7 @@ int col_n = 0;
 u32 typeId = 0;
 u8 local_ip_port_mac_flg = 0;
 bool noSingleFlg = 0;
-int isIPSettingFlg = 0;
+int isIPSettingFlg = 1;
 u8 loadflg = 0;
 bool maincpu = 0;
 struct sockaddr_in udpsockaddr;
@@ -24,6 +24,7 @@ int selecttunerflg = 0;
 int refreshTimerflg = 1;
 int udprwflg = 0;
 int gatewaynum = 0;
+int stflag = 0;
 QString qstrgateway[64];
 #ifdef Q_OS_WIN //windows
 SOCKET udpfd;

@@ -89,6 +89,7 @@ extern int uselessflg;
 extern int selecttunerflg;
 extern int refreshTimerflg;
 extern int udprwflg;
+extern int stflag;
 extern int gatewaynum;
 extern QString qstrgateway[64];
 #ifndef WRITE
