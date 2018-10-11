@@ -91,7 +91,8 @@ extern int refreshTimerflg;
 extern int udprwflg;
 extern int stflag;
 extern int gatewaynum;
-extern QString qstrgateway[64];
+//extern QString qstrgateway[64];
+extern char chgateway[64][64];
 #ifndef WRITE
 #define WRITE            0
 #endif

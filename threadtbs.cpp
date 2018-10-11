@@ -414,7 +414,6 @@ void threadTbs::udpMulticastClinet()
 				(u8)recvbuf[14], (u8)recvbuf[15],
 				(u8)recvbuf[16], (u8)recvbuf[17]);
 			qDebug("udpMulticast ip:%s", recvtmp);
-
 			if ((((u8)(0x80) != (u8)recvbuf[4]) &&
 				((u8)(0x63) != (u8)recvbuf[4])) ||
 				(((u8)(0x30) != (u8)recvbuf[5]) &&
@@ -424,18 +423,17 @@ void threadTbs::udpMulticastClinet()
 						((u8)(0xab) != (u8)(recvbuf[14])))) {
 				continue;
 			}
-			qDebug("gatewaynum = %d", gatewaynum);
 			for (k = 0; k < gatewaynum; k++) {
-				if (true == qstrgateway[k].contains(QString("%1.%2.%3")
+				if (true == QString(chgateway[k]).contains(QString("%1.%2.%3")
 					.arg((u8)recvbuf[6]).arg((u8)recvbuf[7])
 					.arg((u8)recvbuf[8]), Qt::CaseSensitive)) {
 					break;
 				}
 			}
+			qDebug("k=%d gatewaynum = %d",k, gatewaynum);
 			if (k == gatewaynum) {
 				continue;
 			}
-
 			emit sendIp(QString(recvtmp));
 			i++;
 			QMSLEEP(1);
