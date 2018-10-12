@@ -960,17 +960,15 @@ void Hdmioptiongui::showSelectedImage(QTreeWidgetItem *item, int column)
 		return;
 	}
 	//SetIp(QString("%1:%2").arg(netf[col_n]->ipaddr).arg(netf[col_n]->ipport));
-	if (-1 != parent->text(0).indexOf("TBS8030")) {
+	//if (-1 != parent->text(0).indexOf("TBS8030")) {
 		typeId = 63081;
 		tuner = col_j;
-	}
-	else {
-		typeId = 0;
-		item->setIcon(0, QIcon(":/qss/psblack/chun.png"));
-		Set_100M_Ip(QString(""));
-		Set_1G_Ip(QString(""));
-		return;
-	}
+	//}
+	//else {
+	//	typeId = 0;
+	//	item->setIcon(0, QIcon(":/qss/psblack/chun.png"));
+	//	return;
+	//}
 	a = 1;
 	qDebug("tuner:%d", tuner);
 	typeId = 6316;
