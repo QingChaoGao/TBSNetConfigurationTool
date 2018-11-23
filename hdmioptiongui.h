@@ -41,7 +41,7 @@ public:
     int getNo();
     int getPid();
 	int getAudioSourceAndFreq();
-	//net 
+	//net
 	int getLocal_IP_Port_MAC();
 	int getStreamingArg();
 	//get child device
@@ -78,7 +78,7 @@ private:
 
 private slots:
     void radioClick();
-    void radioClick_M(); 
+    void radioClick_M();
 	void radioClick_HN();
     void showSelectedImage(QTreeWidgetItem * item, int column); //点击树节点事件
     void show_status(Msg* g);
@@ -98,6 +98,6 @@ private slots:
 	void on_che_Check_all_stateChanged(int idx);
 	void on_btn_Download_clicked();
 	void on_btn_Upload_clicked();
-	void on_btn_Refresh_clicked(); 
+	void on_btn_Refresh_clicked();
 };
 #endif

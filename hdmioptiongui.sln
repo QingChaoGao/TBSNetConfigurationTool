@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28107.0
+VisualStudioVersion = 15.0.28306.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hdmioptiongui", "hdmioptiongui.vcxproj", "{0FE2614C-9198-30B3-BADF-CB0B5B3845E2}"
 EndProject
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BFB79438-96EF-4810-BCC8-9D3BF6F766A5}
+		SolutionGuid = {A62BFC42-D938-40CE-A337-2CE4FDF4A8F2}
 	EndGlobalSection
 EndGlobal

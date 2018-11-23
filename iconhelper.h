@@ -1,4 +1,4 @@
-﻿#ifndef ICONHELPER_H
+#ifndef ICONHELPER_H
 #define ICONHELPER_H
 
 #include <QtCore>
@@ -14,7 +14,7 @@ class IconHelper : public QObject
 
 public:
     static IconHelper *Instance();
-    explicit IconHelper(QObject *parent = 0);    
+    explicit IconHelper(QObject *parent = 0);
 
     void setIcon(QLabel *lab, QChar c, quint32 size = 9);
     void setIcon(QAbstractButton *btn, QChar c, quint32 size = 9);

@@ -1801,7 +1801,7 @@ void Hdmioptiongui::on_btn_Set_clicked()
 				}
 
 				QWidget * comboxW2 = tabWS->cellWidget(j, 2);//获得widget
-				QComboBox *combox2 = (QComboBox*)comboxW2;//强制转化为QComboBox   
+				QComboBox *combox2 = (QComboBox*)comboxW2;//强制转化为QComboBox
 				sf[i].protocol = combox2->currentIndex();
 
 				QWidget * cheBoxW3 = tabWS->cellWidget(j, 3);//获得widget

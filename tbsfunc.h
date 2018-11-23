@@ -152,8 +152,8 @@ extern char chgateway[64][64];
 #define DEVAPI_MAX_DEVICES   32
 
 
-#define MAP_FPGA_BASEADDR  	0x4000//write 
-#define WRITE_CMD 			0*8	
+#define MAP_FPGA_BASEADDR  	0x4000//write
+#define WRITE_CMD 			0*8
 #define WRITE_DATA 			1*8
 #define RELEASE_CS 			2*8
 //read
@@ -171,7 +171,7 @@ extern char chgateway[64][64];
 #define  NET_SERVER_PORT_OFFSETADDR     0x0c   //0x0c~0x0d
 #define  SELECT_UDP_OR_RTP_OFFSETADDR   0x0e
 //0x10~0x27:	one RTP parameter(Total 24 bytes)
-#define  RTP_PARAMETER_OFFSETADDR       0x10  
+#define  RTP_PARAMETER_OFFSETADDR       0x10
 /*
 	rtp_gate;  		//bit 7;
     all_ts_through;  	//bit6
@@ -269,7 +269,7 @@ public:
 	unsigned char check_host_free_REG64();
 	unsigned char Check_host_status_REG64(unsigned char status);
     unsigned char ext_one_time_wt(int m_addr,
-		unsigned char *wtbuff, 
+		unsigned char *wtbuff,
 		unsigned char num);
     unsigned char ext_ram_write(int ram_addr,
 		unsigned char *wtbff,
@@ -308,7 +308,7 @@ public:
 		unsigned char num,
 		unsigned char *wtbuffer);
 	bool Check_host_status(unsigned char cs);
-	bool wait_for_host_workdone();	
+	bool wait_for_host_workdone();
 	u8 mcu_is_busy();
 	int matchIp(QString ip, int port, int c);
 	int get_1000M_or_100M(QString ip, int port);
@@ -327,7 +327,7 @@ public:
 #else
 	int udpOpen_no(QString ipaddr, int ipport);
 #endif
-		
+
 };
 
 #endif // TBSFUNC_H
