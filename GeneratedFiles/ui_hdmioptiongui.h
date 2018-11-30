@@ -115,7 +115,6 @@ public:
     QGroupBox *group;
     QGridLayout *gridLayout_3;
     QLabel *label_4;
-    QSpacerItem *horizontalSpacer_2;
     QLabel *label_3;
     QLineEdit *lin_Apid;
     QLineEdit *lin_PgmNa;
@@ -128,22 +127,23 @@ public:
     QLabel *label_6;
     QComboBox *com_Aout;
     QLineEdit *lin_Pmt;
-    QLineEdit *lin_InFmt;
     QLineEdit *lin_Vpid;
     QComboBox *com_AFre;
     QLabel *label_7;
     QLabel *label;
     QPushButton *btn_Res;
     QPushButton *btn_Run;
+    QSpacerItem *horizontalSpacer_2;
+    QLineEdit *lin_InFmt;
     QWidget *page_Net;
-    QGridLayout *gridLayout_7;
-    QSpacerItem *horizontalSpacer_5;
     QTabWidget *tabNetwork;
     QWidget *TabStreaming;
     QGridLayout *gridLayout_11;
-    QCheckBox *che_Check_all;
     QSpacerItem *horizontalSpacer_4;
+    QComboBox *com_PacketSize;
     QTableWidget *tabW_Streaming;
+    QCheckBox *che_Check_all;
+    QSpacerItem *horizontalSpacer_10;
     QWidget *TabIpSetting;
     QGridLayout *gridLayout_13;
     QGroupBox *gSetting;
@@ -165,12 +165,16 @@ public:
     QLabel *label_18;
     QCheckBox *che_DHCP;
     QLineEdit *lin_1G_Ip;
-    QPushButton *btn_Upload;
-    QPushButton *btn_Download;
-    QPushButton *btn_Set;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *horizontalLayout_4;
     QSpacerItem *horizontalSpacer_7;
     QLabel *label_14;
     QComboBox *com_Netlist;
+    QPushButton *btn_Restart;
+    QSpacerItem *horizontalSpacer_5;
+    QPushButton *btn_Download;
+    QPushButton *btn_Upload;
+    QPushButton *btn_Set;
 
     void setupUi(QDialog *Hdmioptiongui)
     {
@@ -630,10 +634,6 @@ public:
 
         gridLayout_3->addWidget(label_4, 5, 3, 1, 1);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_3->addItem(horizontalSpacer_2, 2, 2, 1, 1);
-
         label_3 = new QLabel(group);
         label_3->setObjectName(QStringLiteral("label_3"));
         sizePolicy.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
@@ -719,14 +719,6 @@ public:
 
         gridLayout_3->addWidget(lin_Pmt, 4, 4, 1, 1);
 
-        lin_InFmt = new QLineEdit(group);
-        lin_InFmt->setObjectName(QStringLiteral("lin_InFmt"));
-        sizePolicy3.setHeightForWidth(lin_InFmt->sizePolicy().hasHeightForWidth());
-        lin_InFmt->setSizePolicy(sizePolicy3);
-        lin_InFmt->setReadOnly(true);
-
-        gridLayout_3->addWidget(lin_InFmt, 1, 1, 1, 4);
-
         lin_Vpid = new QLineEdit(group);
         lin_Vpid->setObjectName(QStringLiteral("lin_Vpid"));
         sizePolicy3.setHeightForWidth(lin_Vpid->sizePolicy().hasHeightForWidth());
@@ -775,6 +767,18 @@ public:
 
         gridLayout_3->addWidget(btn_Run, 6, 4, 1, 1);
 
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_3->addItem(horizontalSpacer_2, 2, 2, 1, 1);
+
+        lin_InFmt = new QLineEdit(group);
+        lin_InFmt->setObjectName(QStringLiteral("lin_InFmt"));
+        sizePolicy3.setHeightForWidth(lin_InFmt->sizePolicy().hasHeightForWidth());
+        lin_InFmt->setSizePolicy(sizePolicy3);
+        lin_InFmt->setReadOnly(true);
+
+        gridLayout_3->addWidget(lin_InFmt, 1, 1, 1, 4);
+
         gridLayout_3->setColumnStretch(0, 1);
         gridLayout_3->setColumnStretch(1, 1);
         gridLayout_3->setColumnStretch(2, 1);
@@ -790,33 +794,39 @@ public:
         page_Net->setObjectName(QStringLiteral("page_Net"));
         sizePolicy.setHeightForWidth(page_Net->sizePolicy().hasHeightForWidth());
         page_Net->setSizePolicy(sizePolicy);
-        gridLayout_7 = new QGridLayout(page_Net);
-        gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
-        horizontalSpacer_5 = new QSpacerItem(75, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_7->addItem(horizontalSpacer_5, 0, 4, 1, 1);
-
         tabNetwork = new QTabWidget(page_Net);
         tabNetwork->setObjectName(QStringLiteral("tabNetwork"));
+        tabNetwork->setGeometry(QRect(10, 50, 1021, 441));
         TabStreaming = new QWidget();
         TabStreaming->setObjectName(QStringLiteral("TabStreaming"));
         gridLayout_11 = new QGridLayout(TabStreaming);
         gridLayout_11->setObjectName(QStringLiteral("gridLayout_11"));
-        che_Check_all = new QCheckBox(TabStreaming);
-        che_Check_all->setObjectName(QStringLiteral("che_Check_all"));
-
-        gridLayout_11->addWidget(che_Check_all, 0, 1, 1, 1);
-
         horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         gridLayout_11->addItem(horizontalSpacer_4, 0, 0, 1, 1);
+
+        com_PacketSize = new QComboBox(TabStreaming);
+        com_PacketSize->setObjectName(QStringLiteral("com_PacketSize"));
+
+        gridLayout_11->addWidget(com_PacketSize, 0, 1, 1, 1);
 
         tabW_Streaming = new QTableWidget(TabStreaming);
         tabW_Streaming->setObjectName(QStringLiteral("tabW_Streaming"));
         tabW_Streaming->setLayoutDirection(Qt::LeftToRight);
 
-        gridLayout_11->addWidget(tabW_Streaming, 1, 0, 1, 3);
+        gridLayout_11->addWidget(tabW_Streaming, 1, 0, 1, 5);
 
+        che_Check_all = new QCheckBox(TabStreaming);
+        che_Check_all->setObjectName(QStringLiteral("che_Check_all"));
+
+        gridLayout_11->addWidget(che_Check_all, 0, 3, 1, 1);
+
+        horizontalSpacer_10 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_11->addItem(horizontalSpacer_10, 0, 2, 1, 1);
+
+        gridLayout_11->setColumnStretch(0, 9);
+        gridLayout_11->setColumnStretch(1, 2);
         tabNetwork->addTab(TabStreaming, QString());
         TabIpSetting = new QWidget();
         TabIpSetting->setObjectName(QStringLiteral("TabIpSetting"));
@@ -928,61 +938,72 @@ public:
         gridLayout_13->addWidget(gSetting, 1, 0, 1, 1);
 
         tabNetwork->addTab(TabIpSetting, QString());
-
-        gridLayout_7->addWidget(tabNetwork, 1, 0, 1, 5);
-
-        btn_Upload = new QPushButton(page_Net);
-        btn_Upload->setObjectName(QStringLiteral("btn_Upload"));
-        sizePolicy3.setHeightForWidth(btn_Upload->sizePolicy().hasHeightForWidth());
-        btn_Upload->setSizePolicy(sizePolicy3);
-        btn_Upload->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0)"));
-
-        gridLayout_7->addWidget(btn_Upload, 2, 0, 1, 1);
-
-        btn_Download = new QPushButton(page_Net);
-        btn_Download->setObjectName(QStringLiteral("btn_Download"));
-        sizePolicy3.setHeightForWidth(btn_Download->sizePolicy().hasHeightForWidth());
-        btn_Download->setSizePolicy(sizePolicy3);
-        btn_Download->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0)"));
-
-        gridLayout_7->addWidget(btn_Download, 2, 1, 1, 1);
-
-        btn_Set = new QPushButton(page_Net);
-        btn_Set->setObjectName(QStringLiteral("btn_Set"));
-        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy5.setHorizontalStretch(200);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(btn_Set->sizePolicy().hasHeightForWidth());
-        btn_Set->setSizePolicy(sizePolicy5);
-        btn_Set->setMinimumSize(QSize(200, 0));
-        btn_Set->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0);"));
-
-        gridLayout_7->addWidget(btn_Set, 2, 4, 1, 1);
-
+        horizontalLayoutWidget = new QWidget(page_Net);
+        horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
+        horizontalLayoutWidget->setGeometry(QRect(10, 0, 1021, 31));
+        horizontalLayout_4 = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
         horizontalSpacer_7 = new QSpacerItem(191, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_7->addItem(horizontalSpacer_7, 0, 0, 1, 1);
+        horizontalLayout_4->addItem(horizontalSpacer_7);
 
-        label_14 = new QLabel(page_Net);
+        label_14 = new QLabel(horizontalLayoutWidget);
         label_14->setObjectName(QStringLiteral("label_14"));
-        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(label_14->sizePolicy().hasHeightForWidth());
-        label_14->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy5(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(label_14->sizePolicy().hasHeightForWidth());
+        label_14->setSizePolicy(sizePolicy5);
 
-        gridLayout_7->addWidget(label_14, 0, 1, 1, 1);
+        horizontalLayout_4->addWidget(label_14);
 
-        com_Netlist = new QComboBox(page_Net);
+        com_Netlist = new QComboBox(horizontalLayoutWidget);
         com_Netlist->setObjectName(QStringLiteral("com_Netlist"));
 
-        gridLayout_7->addWidget(com_Netlist, 0, 2, 1, 2);
+        horizontalLayout_4->addWidget(com_Netlist);
 
-        gridLayout_7->setColumnStretch(0, 1);
-        gridLayout_7->setColumnStretch(1, 1);
-        gridLayout_7->setColumnStretch(2, 1);
-        gridLayout_7->setColumnStretch(3, 1);
-        gridLayout_7->setColumnStretch(4, 1);
+        btn_Restart = new QPushButton(horizontalLayoutWidget);
+        btn_Restart->setObjectName(QStringLiteral("btn_Restart"));
+        btn_Restart->setEnabled(true);
+        btn_Restart->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0);"));
+
+        horizontalLayout_4->addWidget(btn_Restart);
+
+        horizontalSpacer_5 = new QSpacerItem(75, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_5);
+
+        horizontalLayout_4->setStretch(0, 1);
+        horizontalLayout_4->setStretch(1, 2);
+        horizontalLayout_4->setStretch(2, 6);
+        horizontalLayout_4->setStretch(3, 2);
+        horizontalLayout_4->setStretch(4, 1);
+        btn_Download = new QPushButton(page_Net);
+        btn_Download->setObjectName(QStringLiteral("btn_Download"));
+        btn_Download->setGeometry(QRect(11, 501, 201, 23));
+        QSizePolicy sizePolicy6(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(btn_Download->sizePolicy().hasHeightForWidth());
+        btn_Download->setSizePolicy(sizePolicy6);
+        btn_Download->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0)"));
+        btn_Upload = new QPushButton(page_Net);
+        btn_Upload->setObjectName(QStringLiteral("btn_Upload"));
+        btn_Upload->setGeometry(QRect(229, 501, 201, 23));
+        sizePolicy6.setHeightForWidth(btn_Upload->sizePolicy().hasHeightForWidth());
+        btn_Upload->setSizePolicy(sizePolicy6);
+        btn_Upload->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0)"));
+        btn_Set = new QPushButton(page_Net);
+        btn_Set->setObjectName(QStringLiteral("btn_Set"));
+        btn_Set->setGeometry(QRect(830, 501, 200, 23));
+        QSizePolicy sizePolicy7(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy7.setHorizontalStretch(200);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(btn_Set->sizePolicy().hasHeightForWidth());
+        btn_Set->setSizePolicy(sizePolicy7);
+        btn_Set->setMinimumSize(QSize(200, 0));
+        btn_Set->setStyleSheet(QStringLiteral("background-color: rgb(0, 40, 0);"));
         sta_DevWdeget->addWidget(page_Net);
 
         gridLayout_12->addWidget(sta_DevWdeget, 0, 0, 1, 1);
@@ -1001,7 +1022,9 @@ public:
         stackedWidget->setCurrentIndex(0);
         sta_DevWdeget->setCurrentIndex(1);
         sta_Mode->setCurrentIndex(2);
-        tabNetwork->setCurrentIndex(1);
+        com_Hprofile->setCurrentIndex(0);
+        tabNetwork->setCurrentIndex(0);
+        com_PacketSize->setCurrentIndex(-1);
         com_Netlist->setCurrentIndex(-1);
 
 
@@ -1071,7 +1094,7 @@ public:
         label_5->setText(QApplication::translate("Hdmioptiongui", "V_PID:", nullptr));
         label_2->setText(QApplication::translate("Hdmioptiongui", "Input Format:", nullptr));
         label_8->setText(QApplication::translate("Hdmioptiongui", "PMT:", nullptr));
-        label_6->setText(QApplication::translate("Hdmioptiongui", "A_PID", nullptr));
+        label_6->setText(QApplication::translate("Hdmioptiongui", "A_PID:", nullptr));
         com_Aout->setItemText(0, QApplication::translate("Hdmioptiongui", "HdmiModule", nullptr));
 
         com_AFre->setItemText(0, QApplication::translate("Hdmioptiongui", "48k", nullptr));
@@ -1097,10 +1120,11 @@ public:
         label_18->setText(QApplication::translate("Hdmioptiongui", "Local IP&&Server Port:", nullptr));
         che_DHCP->setText(QApplication::translate("Hdmioptiongui", " Enable DHCP", nullptr));
         tabNetwork->setTabText(tabNetwork->indexOf(TabIpSetting), QApplication::translate("Hdmioptiongui", "IP Setting    ", nullptr));
-        btn_Upload->setText(QApplication::translate("Hdmioptiongui", "Import ", nullptr));
-        btn_Download->setText(QApplication::translate("Hdmioptiongui", "Export", nullptr));
-        btn_Set->setText(QApplication::translate("Hdmioptiongui", "Apply", nullptr));
         label_14->setText(QApplication::translate("Hdmioptiongui", "Network device list:", nullptr));
+        btn_Restart->setText(QApplication::translate("Hdmioptiongui", "Restart", nullptr));
+        btn_Download->setText(QApplication::translate("Hdmioptiongui", "Export", nullptr));
+        btn_Upload->setText(QApplication::translate("Hdmioptiongui", "Import ", nullptr));
+        btn_Set->setText(QApplication::translate("Hdmioptiongui", "Apply", nullptr));
     } // retranslateUi
 
 };

@@ -67,6 +67,7 @@ private:
 	QMessageBox *qbox;
 	NetInfor **netf;
 	QComboBox *comBoxProtocol[16];
+	QComboBox *comBoxNullPacked[16];
 	QCheckBox *cheBoxTS[16];
 	QHBoxLayout *hLayoutTS[16];
 	QWidget *widgetTS[16];
@@ -97,6 +98,6 @@ private slots:
 	void on_btn_Download_clicked();
 	void on_btn_Upload_clicked();
 	void on_btn_Refresh_clicked();
-
+	void on_btn_Restart_clicked();
 };
 #endif

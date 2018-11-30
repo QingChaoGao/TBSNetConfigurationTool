@@ -57,6 +57,8 @@
 #define SetAFre(n)				ui->com_AFre->setCurrentIndex(n)
 #define GetAFre	     		    ui->com_AFre->currentIndex()
 
+#define GetPacketSize     		ui->com_PacketSize->currentIndex()
+
 Hdmioptiongui::Hdmioptiongui(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::Hdmioptiongui)
@@ -195,13 +197,13 @@ int Hdmioptiongui::initStreamingForm()
 	tabWS->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	tabWS->setWindowTitle("Streaming");
 	tabWS->setRowCount(netf[col_n]->validCaptureNum);
-	tabWS->setColumnCount(5);
+	tabWS->setColumnCount(6);
 	//QTableWidgetItem *item = new QTableWidgetItem();
 	//item->setCheckState(Qt::Checked);
 	//item->setText(QString("Enable/Disenable"));
 	//tabWS->setHorizontalHeaderItem(3, item);
 	QStringList row_header;
-	row_header << "Unicast/Multicast IP" << "Port" << "Net Protocol" << "Enable/Disable" << "Streaming Status";   //表头
+	row_header << "Unicast/Multicast IP" << "Port" << "Null Packed" << "Net Protocol" << "Enable/Disable" << "Streaming Status";   //表头
 	tabWS->setHorizontalHeaderLabels(row_header);
 
 	QStringList column_header;
@@ -215,13 +217,21 @@ int Hdmioptiongui::initStreamingForm()
 			//port
 			tabWS->setItem(j, 1, new QTableWidgetItem(QString("%1").arg(sf[i].port)));
 			//tabWS->item(j, 1)->setTextAlignment(Qt::AlignCenter);
+
+			comBoxNullPacked[i] = new QComboBox();
+			comBoxNullPacked[i]->addItem(QObject::tr("No"));
+			comBoxNullPacked[i]->addItem(QObject::tr("Always"));
+			comBoxNullPacked[i]->setCurrentIndex(sf[i].nullpacked);
+			comBoxNullPacked[i]->setEnabled(true);
+			tabWS->setCellWidget(j, 2, comBoxNullPacked[i]);//////////////////////////////////
+
 			//Net Protocol
 			comBoxProtocol[i] = new QComboBox();
 			comBoxProtocol[i]->addItem(QObject::tr("UDP"));
 			comBoxProtocol[i]->addItem(QObject::tr("RTP"));
 			comBoxProtocol[i]->setCurrentIndex(sf[i].protocol);
 			comBoxProtocol[i]->setEnabled(true);
-			tabWS->setCellWidget(j, 2, comBoxProtocol[i]);
+			tabWS->setCellWidget(j, 3, comBoxProtocol[i]);
 			//check
 			cheBoxTS[i] = new QCheckBox();
 			cheBoxTS[i]->setCheckState((sf[i].switchTS) ? (Qt::Checked) : (Qt::Unchecked));
@@ -234,7 +244,7 @@ int Hdmioptiongui::initStreamingForm()
 			hLayoutTS[i]->setMargin(0);                          // 必须添加, 否则CheckBox不能正常显示
 			hLayoutTS[i]->setAlignment(cheBoxTS[i], Qt::AlignCenter);
 			widgetTS[i]->setLayout(hLayoutTS[i]);
-			tabWS->setCellWidget(j, 3, widgetTS[i]);
+			tabWS->setCellWidget(j, 4, widgetTS[i]);
 			if (0 == sf[i].switchTS) {
 				uncheckflg = 1;
 			}
@@ -249,7 +259,7 @@ int Hdmioptiongui::initStreamingForm()
 			labelStauts[i] = new QLabel();
 			labelStauts[i]->setPixmap(QPixmap(picpath).scaled(QSize(25, 25), Qt::KeepAspectRatio));
 			labelStauts[i]->setAlignment(Qt::AlignHCenter);
-			tabWS->setCellWidget(j, 4, labelStauts[i]);
+			tabWS->setCellWidget(j, 5, labelStauts[i]);
 			j++;
 		}
 	}
@@ -363,6 +373,7 @@ int Hdmioptiongui::readNetwork(int idx)
 	//qbox_1->exec();
 
 	typeId = 6316;
+	a = 1;
 	tbs.monopolizeCpu_w(0x00, &a, 1);//set 1
 	maincpu = 1;
 	//	typeId = 63081;
@@ -405,6 +416,8 @@ int Hdmioptiongui::readBuffer()
 	//getLocal_IP_Port_MAC();
 	//10.getStreamingArg
 	//getStreamingArg();
+
+	//qDebug("typeId = %d", typeId);
 	return 0;
 }
 
@@ -765,11 +778,54 @@ int Hdmioptiongui::getStreamingArg()
 	typeId = 6316;
 	tbs.REG64_rd(0x4000 + 7 * 4, 2, &tmp[1]);
 	tmp[0] = tmp[2];
+
+	u32 NullPackedAddr = 0x50;
+
+	u8 packetsize = 1;
+	tbs.target_ext_memory_rd_wt(READ, 0x55, &packetsize, 1);
+	ui->com_PacketSize->clear();
+	ui->com_PacketSize->addItem(QObject::tr("packet size 188 * 1"), 1);
+	ui->com_PacketSize->addItem(QObject::tr("packet size 188 * 2"), 2);
+	ui->com_PacketSize->addItem(QObject::tr("packet size 188 * 3"), 3);
+	ui->com_PacketSize->addItem(QObject::tr("packet size 188 * 4"), 4);
+	ui->com_PacketSize->addItem(QObject::tr("packet size 188 * 5"), 5);
+	ui->com_PacketSize->addItem(QObject::tr("packet size 188 * 6"), 6);
+	ui->com_PacketSize->addItem(QObject::tr("packet size 188 * 7"), 7);
+	//ui->com_PacketSize->setCurrentIndex(packetsize);
+	qDebug("get packetsize = %d", packetsize);
+	//packetsize =(u8)(ui->com_PacketSize->itemData(packetsize).toInt());
+	//qDebug("get packetsize = %d", packetsize);
+	if (1 <= packetsize && packetsize <= 7) {
+		packetsize = packetsize - 1;
+		ui->com_PacketSize->setCurrentIndex(packetsize);
+	}
+	else
+	{
+		ui->com_PacketSize->clear();
+		qDebug("Failed to get empty package size");
+		//return 0;
+	}
+	ui->com_PacketSize->setEnabled(true);
+
 	for (int i = 0; i < 2; i++) {
 		qDebug("tmp[%d] = %#02x", i, tmp[i]);
 	}
 	for (int i = 0; i < 16; i++) {
 		if (-1 != netf[col_n]->Item_tuner[i]) {
+			memset(tmpbuf, 0, 15);
+			if (0 <= i && i <= 3)
+				NullPackedAddr = 0x50 + (i % 4);
+			else if (4 <= i && i <= 7)
+				NullPackedAddr = 0xD0 + (i % 4);
+			else if (8 <= i && i <= 11)
+				NullPackedAddr = 0x150 + (i % 4);
+			else if (12 <= i && i <= 15)
+				NullPackedAddr = 0x1D0 + (i % 4);
+			tbs.target_ext_memory_rd_wt(READ, NullPackedAddr, tmpbuf, 1);
+			sf[i].nullpacked = tmpbuf[0] & 0x01;
+			qDebug("Get NullPackedAddr = %04x", NullPackedAddr);
+			qDebug("Get sf[%d].nullpacked = %d", i, sf[i].nullpacked);
+
 			memset(tmpbuf, 0, 15);
 			tbs.target_ext_memory_rd_wt(READ, NET_BASE_ADDR_CHILD(i / 4)\
 				+ OFFICE_CHILD_HDMI(i % 4), tmpbuf, 14);
@@ -988,6 +1044,9 @@ void Hdmioptiongui::show_status(Msg *g)
 	u8 ret = 0;
 	int col_bak = 0;
 	int i = 0;
+
+	int cnt_time = 250;
+
 #if 1
 	if (1 == g->type) {
 		//test
@@ -1077,10 +1136,28 @@ void Hdmioptiongui::show_status(Msg *g)
 
 	if (8 == g->type) {
 		myDialog = new Mymesg();
+		QString title = "The new IP is configuring, please wait..";
+		myDialog->starttimer(title, cnt_time);
 		myDialog->exec();
 		return;
 	}
-
+	if (10 == g->type) {
+		QString title = "The device is restaring, please wait..";
+		myDialog = new Mymesg();
+		myDialog->starttimer(title, cnt_time);
+		myDialog->exec();
+		return;
+	}
+	if (11 == g->type) {
+		if (QMessageBox::Ok == QMessageBox::critical(this, tr("failure"),
+			tr("Restart the failure"),
+			QMessageBox::Ok,
+			QMessageBox::Ok)) {
+			qDebug("nnnnnnnnnnnnnnnn");
+			return;
+		}
+		return;
+	}
 	if (9 == g->type) {
 		if (NULL != myDialog) {
 			myDialog->close();
@@ -1283,6 +1360,7 @@ void Hdmioptiongui::on_com_Netlist_currentIndexChanged(int idx)
 	//qbox_1->exec();
 	//mode = 8;
 	typeId = 6316;
+	a = 1;
 	tbs.monopolizeCpu_w(0x00, &a, 1);//set 1
 	maincpu = 1;
 	//	typeId = 63081;
@@ -1474,6 +1552,7 @@ void Hdmioptiongui::initForm()
 		labelStauts[i] = NULL;
 		widgetTS[i] = NULL;
 		hLayoutTS[i] = NULL;
+		comBoxNullPacked[i] = NULL;
 	}
 	tabWS = ui->tabW_Streaming;
 	myDialog = NULL;
@@ -1689,6 +1768,42 @@ void Hdmioptiongui::on_btn_Run_clicked()
 	return;
 }
 
+void Hdmioptiongui::on_btn_Restart_clicked()
+{
+	if (1 != comchangeflg) {
+		return;
+	}
+	if (udpfd < 3) {
+		if (QMessageBox::Ok == QMessageBox::warning(this, tr("warn"),
+			tr("Device not selected,or open fail"),
+			QMessageBox::Ok,
+			QMessageBox::Ok)) {
+			return;
+		}
+		return;
+	}
+	if (mode != 0) {
+		if (QMessageBox::Ok == QMessageBox::warning(this, tr("warn"),
+			tr("Device is busy,please wait..    "),
+			QMessageBox::Ok,
+			QMessageBox::Ok)) {
+			return;
+		}
+		return;
+	}
+	if (QMessageBox::No == QMessageBox::question(this, tr("question"),
+		tr("Restart?                                      "),
+		QMessageBox::No | QMessageBox::Yes,
+		QMessageBox::No)) {
+		return;
+	}
+
+	mode = 10;
+
+	return;
+
+}
+
 void Hdmioptiongui::on_btn_Set_clicked()
 {
 	if (1 != comchangeflg) {
@@ -1727,23 +1842,31 @@ void Hdmioptiongui::on_btn_Set_clicked()
 
 				QWidget * comboxW2 = tabWS->cellWidget(j, 2);//获得widget
 				QComboBox *combox2 = (QComboBox*)comboxW2;//强制转化为QComboBox   
-				sf[i].protocol = combox2->currentIndex();
+				sf[i].nullpacked = combox2->currentIndex();
 
-				QWidget * cheBoxW3 = tabWS->cellWidget(j, 3);//获得widget
-				QCheckBox *cheBox3 = (QCheckBox *)cheBoxW3->children().at(1);
-				sf[i].switchTS = cheBox3->isChecked();
+				QWidget * comboxW3 = tabWS->cellWidget(j, 3);//获得widget
+				QComboBox *combox3 = (QComboBox*)comboxW3;//强制转化为QComboBox   
+				sf[i].protocol = combox3->currentIndex();
+
+				QWidget * cheBoxW4 = tabWS->cellWidget(j, 4);//获得widget
+				QCheckBox *cheBox4 = (QCheckBox *)cheBoxW4->children().at(1);
+				sf[i].switchTS = cheBox4->isChecked();
 				qDebug("sf[%d].switchTS  = %d", i, sf[i].switchTS);
 				sf[i].streamStatus = 0;
 				j++;
 				//	qDebug()<<"tar ip2:"<< sf[i].ip;
+				qDebug("set sf[%d].nullpacked = %d", i, sf[i].nullpacked);
+
 			}
 		}
+
 		if (QMessageBox::No == QMessageBox::question(this, tr("question"),
 			tr("Apply?                                      "),
 			QMessageBox::No | QMessageBox::Yes,
 			QMessageBox::No)) {
 			return;
 		}
+		packetsize = (u8)(ui->com_PacketSize->itemData(GetPacketSize).toInt());
 		mode = 5;
 	}
 	else if (1 == isIPSettingFlg) {

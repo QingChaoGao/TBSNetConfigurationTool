@@ -14,6 +14,7 @@ class Mymesg : public QDialog
 public:
     explicit Mymesg(QWidget *parent = 0);
     ~Mymesg();
+	void starttimer(QString title,int cnt_time);
 private slots:
     void timeoutfunc(void);
 private:

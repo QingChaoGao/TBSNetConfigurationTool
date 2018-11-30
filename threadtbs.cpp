@@ -23,6 +23,7 @@ u8 audio_parameter[2] = { 0 };
 StreamingForm sf[16];
 int tunerarry[16] = { 0 };
 
+u8 packetsize = 7;
 
 threadTbs::threadTbs() :QThread()
 {
@@ -70,6 +71,7 @@ void threadTbs::writeBuffer()
 	setPid();
 	//8.setAudioSourceAndFreq
 	setAudioSourceAndFreq();
+
 	et.reHdmi();
 	m->ok = 1;
 	m->type = 2;
@@ -277,6 +279,11 @@ int threadTbs::setStreamingArg()
 	m->progress = 0;
 	emit sendMsg(m);
 	typeId = 6316;
+
+	u32 NullPackedAddr = 0x50;
+   		
+	qDebug("set packetsize = %d", packetsize);
+
 	for (int i = 0; i < 16; i++) {
 		if (-1 != tunerarry[i]) {
 			streamingbuf[0] = sf[i].switchTS;
@@ -291,7 +298,23 @@ int threadTbs::setStreamingArg()
 				+ OFFICE_CHILD_HDMI(i % 4), streamingbuf, 6);
 			et.target_ext_memory_rd_wt(WRITE, NET_BASE_ADDR_CHILD(i / 4)\
 				+ OFFICE_CHILD_HDMI(i % 4) + 0x0c, &streamingbuf[12], 2);
-			et.target_ext_memory_rd_wt(WRITE, 0xff08, (u8*)&i, 1);
+
+			if (0 <= i && i <= 3)
+				NullPackedAddr = 0x50 + (i % 4);
+			else if (4 <= i && i <= 7)
+				NullPackedAddr = 0xD0 + (i % 4);
+			else if (8 <= i && i <= 11)
+				NullPackedAddr = 0x150 + (i % 4);
+			else if (12 <= i && i <= 15)
+				NullPackedAddr = 0x1D0 + (i % 4);
+
+			streamingbuf[14] = sf[i].nullpacked;
+			qDebug("set NullPackedAddr = %04x sf[%d].nullpacked= %d", NullPackedAddr, i, sf[i].nullpacked);
+			et.target_ext_memory_rd_wt(WRITE, NullPackedAddr, &streamingbuf[14], 1);
+
+			et.target_ext_memory_rd_wt(WRITE, 0x55, &packetsize, 1);
+
+			et.target_ext_memory_rd_wt(WRITE, 0xff08, (u8*)&i, 1);/*ÉèÖÃÉúÐ§*/
 			///qDebug() << "tar ip3:" << sf[i].ip;
 		}
 	}
@@ -326,6 +349,76 @@ int threadTbs::showUI_end()
 	m->progress = 0;
 	emit sendMsg(m);
 	return 0;
+}
+void threadTbs::restart_device()
+{
+	int n = 0;
+	int i = 0;
+	int j = 0;
+	int ufd = -1;
+	char sendbuff[64] = { 0 };
+	char recvbuff[64] = { 0 };
+
+	sendbuff[0] = 0x00;//read
+	sendbuff[1] = 0x00;
+	sendbuff[2] = 0x40;
+	sendbuff[3] = 0xff;
+	sendbuff[4] = 0x54;
+	sendbuff[5] = 0x42;
+	sendbuff[6] = 0x53;
+	sendbuff[7] = 0x5f;
+	sendbuff[8] = 0x52;
+	sendbuff[9] = 0x53;
+	sendbuff[10] = 0x54;
+	sendbuff[11] = 0x4e;
+
+
+	n = sendto(udpfd, sendbuff, 64, 0, (struct sockaddr*)&udpsockaddr, len);
+	if (n < 0) {
+		qDebug("udp_REG64_wt:sendto time out\n!");
+		return;
+	}
+
+	memset(recvbuff, 0, 64);
+	n = recvfrom(udpfd, recvbuff, 64, 0, (struct sockaddr*)&udpsockaddr, &len);
+	if (n < 0) {
+		qDebug("udp_REG64_wt:recvfrom time out\n!");
+		return;
+	}
+	for (i = 0; i < 12; i++) {
+		qDebug("recvbuff[%d] = %02x", i, (u8)recvbuff[i]);
+	}
+	if ((recvbuff[0] & 0xff) == 0x00 && (recvbuff[1] & 0xff) == 0x88 &&
+		(recvbuff[2] & 0xff) == 0x40 && (recvbuff[3] & 0xff) == 0xff &&
+		(recvbuff[4] & 0xff) == 0x54 && (recvbuff[5] & 0xff) == 0x42 &&
+		(recvbuff[6] & 0xff) == 0x53 && (recvbuff[7] & 0xff) == 0x5f &&
+		(recvbuff[8] & 0xff) == 0x52 && (recvbuff[9] & 0xff) == 0x53 &&
+		(recvbuff[10] & 0xff) == 0x54 && (recvbuff[11] & 0xff) == 0x4e) {
+		m->ok = 1;
+		m->type = 10;
+		m->progress = 0;
+		emit sendMsg(m);
+
+		QMSLEEP(24980);
+
+		m->ok = 1;
+		m->type = 9;
+		m->progress = 0;
+		emit sendMsg(m);
+		QMSLEEP(2);
+		m->ok = 1;
+		m->type = 5;
+		m->progress = 0;
+		emit sendMsg(m);
+	}
+	else {
+		m->ok = 1;
+		m->type = 11;
+		m->progress = 0;
+		emit sendMsg(m);
+		qDebug("Restart the failure\n");
+	}
+	return;
 }
 
 void threadTbs::udpMulticastClinet()
@@ -466,6 +559,9 @@ void threadTbs::run()
 			break;
 		case 9:
 			showUI_end();
+			break;
+		case 10:
+			restart_device();
 			break;
 		}
 		mode = 0;

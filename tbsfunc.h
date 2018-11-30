@@ -220,6 +220,7 @@ public:
 	int  protocol;
 	int switchTS;
 	int streamStatus;
+	int nullpacked;
 };
 
 class MATCH_IP {

@@ -26,6 +26,9 @@ extern u8 Local_parameter_1G[17];
 extern u8 audio_parameter[2];
 extern StreamingForm sf[16];
 extern int tunerarry[16];
+
+extern u8 packetsize;
+
 class threadTbs:public QThread
 {
     Q_OBJECT
@@ -48,6 +51,7 @@ public:
 	int setStreamingArg();
 	int showUI_start();
 	int showUI_end();
+	void restart_device();
 signals:
     void sendMsg(Msg* g);
 	void sendIp(QString qs);

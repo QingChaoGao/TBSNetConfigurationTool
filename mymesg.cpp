@@ -10,16 +10,22 @@ Mymesg::Mymesg(QWidget *parent) :
 	setFixedSize(350,100);
     count = 0;
     ui->bar_MyDIsplay->setRange(0,100);
-    ui->lab_MyDisplay->setText(QString("The new IP is configuring, please wait.."));
-    mytimer = new QTimer(this);
-    connect(mytimer,SIGNAL(timeout()),this,SLOT(timeoutfunc()));//注意第一个为timer
-    mytimer->start(250);
+  
 }
 
 Mymesg::~Mymesg()
 {
     delete mytimer;
     delete ui;
+}
+
+void Mymesg::starttimer(QString title, int cnt_time)
+{
+//	ui->lab_MyDisplay->setText(QString("The new IP is configuring, please wait.."));
+	ui->lab_MyDisplay->setText(title);
+	mytimer = new QTimer(this);
+	connect(mytimer, SIGNAL(timeout()), this, SLOT(timeoutfunc()));//注意第一个为timer
+	mytimer->start(cnt_time);
 }
 
 void Mymesg::timeoutfunc()

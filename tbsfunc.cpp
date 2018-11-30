@@ -691,6 +691,7 @@ unsigned char tbsfunc::ext_one_time_wt_REG32(int m_addr, unsigned char *wtbuff, 
 
 	//...cs high................................
 	REG64_wt(0x4000 + 3 * 4, 4, buff); //cs high;
+
 	//...check host work done-->..................
 	if (wait_for_host_workdone() == 0)
 	{

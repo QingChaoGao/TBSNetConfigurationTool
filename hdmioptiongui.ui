@@ -752,6 +752,9 @@
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
+                       <property name="currentIndex">
+                        <number>0</number>
+                       </property>
                        <item>
                         <property name="text">
                          <string>Hight Profile</string>
@@ -873,19 +876,6 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="2">
-                  <spacer name="horizontalSpacer_2">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
                  <item row="2" column="0">
                   <widget class="QLabel" name="label_3">
                    <property name="sizePolicy">
@@ -1000,7 +990,7 @@
                     </sizepolicy>
                    </property>
                    <property name="text">
-                    <string>A_PID</string>
+                    <string>A_PID:</string>
                    </property>
                   </widget>
                  </item>
@@ -1026,19 +1016,6 @@
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1" colspan="4">
-                  <widget class="QLineEdit" name="lin_InFmt">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="readOnly">
-                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -1140,6 +1117,32 @@
                    </property>
                   </widget>
                  </item>
+                 <item row="2" column="2">
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="1" column="1" colspan="4">
+                  <widget class="QLineEdit" name="lin_InFmt">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -1152,302 +1155,369 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,1,1,1,1">
-              <item row="0" column="4">
-               <spacer name="horizontalSpacer_5">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>75</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="1" column="0" colspan="5">
-               <widget class="QTabWidget" name="tabNetwork">
-                <property name="currentIndex">
-                 <number>1</number>
-                </property>
-                <widget class="QWidget" name="TabStreaming">
-                 <attribute name="title">
-                  <string>Streaming     </string>
-                 </attribute>
-                 <layout class="QGridLayout" name="gridLayout_11">
-                  <item row="0" column="1">
-                   <widget class="QCheckBox" name="che_Check_all">
-                    <property name="text">
-                     <string>Check all</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="0">
-                   <spacer name="horizontalSpacer_4">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item row="1" column="0" colspan="3">
-                   <widget class="QTableWidget" name="tabW_Streaming">
-                    <property name="layoutDirection">
-                     <enum>Qt::LeftToRight</enum>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+             <widget class="QTabWidget" name="tabNetwork">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>50</y>
+                <width>1021</width>
+                <height>441</height>
+               </rect>
+              </property>
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="TabStreaming">
+               <attribute name="title">
+                <string>Streaming     </string>
+               </attribute>
+               <layout class="QGridLayout" name="gridLayout_11" columnstretch="9,2,0,0,0">
+                <item row="0" column="0">
+                 <spacer name="horizontalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QComboBox" name="com_PacketSize">
+                  <property name="currentIndex">
+                   <number>-1</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0" colspan="5">
+                 <widget class="QTableWidget" name="tabW_Streaming">
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QCheckBox" name="che_Check_all">
+                  <property name="text">
+                   <string>Check all</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <spacer name="horizontalSpacer_10">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="TabIpSetting">
+               <attribute name="title">
+                <string>IP Setting    </string>
+               </attribute>
+               <layout class="QGridLayout" name="gridLayout_13">
+                <item row="1" column="0">
+                 <widget class="QGroupBox" name="gSetting">
+                  <property name="title">
+                   <string/>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_16">
+                   <item row="0" column="0">
+                    <widget class="QGroupBox" name="groupBox">
+                     <property name="title">
+                      <string>100M Network:</string>
+                     </property>
+                     <layout class="QGridLayout" name="gridLayout_15">
+                      <item row="0" column="0">
+                       <widget class="QLabel" name="label_24">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string>Local IP&amp;&amp;Server Port:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="label_17">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string>Local Netmask:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="1">
+                       <widget class="QLineEdit" name="lin_100M_Ip">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string/>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QLineEdit" name="lin_100M_Mask"/>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QLineEdit" name="lin_100M_Gateway"/>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="label_22">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string>local Gateway:</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QGroupBox" name="groupBox_2">
+                     <property name="title">
+                      <string>1000M Network:</string>
+                     </property>
+                     <layout class="QGridLayout" name="gridLayout_9">
+                      <item row="3" column="0">
+                       <widget class="QLabel" name="label_23">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string>local Gateway:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QLineEdit" name="lin_1G_Mask"/>
+                      </item>
+                      <item row="3" column="1">
+                       <widget class="QLineEdit" name="lin_1G_Gateway"/>
+                      </item>
+                      <item row="2" column="0">
+                       <widget class="QLabel" name="label_20">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string>Local Netmask:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QLabel" name="label_18">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string>Local IP&amp;&amp;Server Port:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="0">
+                       <widget class="QCheckBox" name="che_DHCP">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="text">
+                         <string> Enable DHCP</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QLineEdit" name="lin_1G_Ip"/>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+             <widget class="QWidget" name="horizontalLayoutWidget">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>0</y>
+                <width>1021</width>
+                <height>31</height>
+               </rect>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,2,6,2,1">
+               <item>
+                <spacer name="horizontalSpacer_7">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>191</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_14">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Network device list:</string>
+                 </property>
                 </widget>
-                <widget class="QWidget" name="TabIpSetting">
-                 <attribute name="title">
-                  <string>IP Setting    </string>
-                 </attribute>
-                 <layout class="QGridLayout" name="gridLayout_13">
-                  <item row="1" column="0">
-                   <widget class="QGroupBox" name="gSetting">
-                    <property name="title">
-                     <string/>
-                    </property>
-                    <layout class="QGridLayout" name="gridLayout_16">
-                     <item row="0" column="0">
-                      <widget class="QGroupBox" name="groupBox">
-                       <property name="title">
-                        <string>100M Network:</string>
-                       </property>
-                       <layout class="QGridLayout" name="gridLayout_15">
-                        <item row="0" column="0">
-                         <widget class="QLabel" name="label_24">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>Local IP&amp;&amp;Server Port:</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="0">
-                         <widget class="QLabel" name="label_17">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>Local Netmask:</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="1">
-                         <widget class="QLineEdit" name="lin_100M_Ip">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string/>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="1">
-                         <widget class="QLineEdit" name="lin_100M_Mask"/>
-                        </item>
-                        <item row="2" column="1">
-                         <widget class="QLineEdit" name="lin_100M_Gateway"/>
-                        </item>
-                        <item row="2" column="0">
-                         <widget class="QLabel" name="label_22">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>local Gateway:</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                     <item row="1" column="0">
-                      <widget class="QGroupBox" name="groupBox_2">
-                       <property name="title">
-                        <string>1000M Network:</string>
-                       </property>
-                       <layout class="QGridLayout" name="gridLayout_9">
-                        <item row="3" column="0">
-                         <widget class="QLabel" name="label_23">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>local Gateway:</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="2" column="1">
-                         <widget class="QLineEdit" name="lin_1G_Mask"/>
-                        </item>
-                        <item row="3" column="1">
-                         <widget class="QLineEdit" name="lin_1G_Gateway"/>
-                        </item>
-                        <item row="2" column="0">
-                         <widget class="QLabel" name="label_20">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>Local Netmask:</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="0">
-                         <widget class="QLabel" name="label_18">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string>Local IP&amp;&amp;Server Port:</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="0">
-                         <widget class="QCheckBox" name="che_DHCP">
-                          <property name="sizePolicy">
-                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                           </sizepolicy>
-                          </property>
-                          <property name="text">
-                           <string> Enable DHCP</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="1">
-                         <widget class="QLineEdit" name="lin_1G_Ip"/>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                 </layout>
+               </item>
+               <item>
+                <widget class="QComboBox" name="com_Netlist">
+                 <property name="currentIndex">
+                  <number>-1</number>
+                 </property>
                 </widget>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QPushButton" name="btn_Upload">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 40, 0)</string>
-                </property>
-                <property name="text">
-                 <string>Import </string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QPushButton" name="btn_Download">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 40, 0)</string>
-                </property>
-                <property name="text">
-                 <string>Export</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="4">
-               <widget class="QPushButton" name="btn_Set">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>200</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>200</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(0, 40, 0);</string>
-                </property>
-                <property name="text">
-                 <string>Apply</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <spacer name="horizontalSpacer_7">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>191</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_14">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Network device list:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2" colspan="2">
-               <widget class="QComboBox" name="com_Netlist">
-                <property name="currentIndex">
-                 <number>-1</number>
-                </property>
-               </widget>
-              </item>
-             </layout>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_Restart">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(0, 40, 0);</string>
+                 </property>
+                 <property name="text">
+                  <string>Restart</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>75</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QPushButton" name="btn_Download">
+              <property name="geometry">
+               <rect>
+                <x>11</x>
+                <y>501</y>
+                <width>201</width>
+                <height>23</height>
+               </rect>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(0, 40, 0)</string>
+              </property>
+              <property name="text">
+               <string>Export</string>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="btn_Upload">
+              <property name="geometry">
+               <rect>
+                <x>229</x>
+                <y>501</y>
+                <width>201</width>
+                <height>23</height>
+               </rect>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(0, 40, 0)</string>
+              </property>
+              <property name="text">
+               <string>Import </string>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="btn_Set">
+              <property name="geometry">
+               <rect>
+                <x>830</x>
+                <y>501</y>
+                <width>200</width>
+                <height>23</height>
+               </rect>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>200</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(0, 40, 0);</string>
+              </property>
+              <property name="text">
+               <string>Apply</string>
+              </property>
+             </widget>
             </widget>
            </widget>
           </item>
